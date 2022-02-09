@@ -1,0 +1,23 @@
+<!-- 소문자로 된 한개의 문자열이 입력되면 중복된 문자를 제거하고 출력하는 프로그램을 작성하세요. 제거된 문자열의 각 문자는 원래 문자열의 순서를 유지합니다. -->
+<!-- 배열.indexOf를 사용한다. indexOf의 리턴값은 처음으로 발견된 조건에 맞는 아이의 인덱스번호-->
+<!-- 또는, indexOf와 while문을 사용하여, 특정 문자가 몇번나왔는지 카운트 할 수 있다. -->
+<!--  -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = "";
+        for (let i = 0; i < s.length; i++) {
+          if (s.indexOf(s[i]) === i) answer += s[i];
+        }
+        return answer;
+      }
+      console.log(solution("ksekkset"));
+    </script>
+  </body>
+  4
+</html>
