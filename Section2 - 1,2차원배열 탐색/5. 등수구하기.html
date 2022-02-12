@@ -1,0 +1,65 @@
+<!-- N(1<=N<=100)명의 학생의 국어점수가 입력되면 각 학생의 등수를 입력된 순서대로 출력하는 프로그램을 작성하세요. -->
+<!-- 베열API의 from 을 사용해서 배열초기화하고, 이중for문을 돌면서 큰값을 찾는경우 순위배열의 해당 인덱스값++를 통해 순위 찾기구현 -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        const n = arr.length;
+        let answer = Array.from({ length: n }, () => 1); //arr과 길이가같은 배열을 만들고 1로 초기화.
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n; j++) {
+            if (arr[j] > arr[i]) answer[i]++;
+          }
+        }
+        return answer;
+      }
+
+      let arr = [92, 92, 92, 100, 76];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>
+<!-- 다른풀이1) arr배열을 copy배열에 그대로 복사한후, arr배열만 sort로 내림차순정렬 후, arr배열 for문 돌면서 answer[i]=arr.indexof(copy[i]) 사용 -->
+
+<!-- 내 풀이  -->
+<!-- 선택정렬구현, 순위계산구현(공동순위체크) -->
+<!-- <script>
+    function solution(arr) {
+      let answer = "",
+        max,
+        rank = 1,
+        temp;
+      for (let i = 0; i < arr.length - 1; i++) {
+        //이중 for문으로 내림차순 선택정렬 구현
+        max = i;
+        for (let j = i + 1; j < arr.length; j++) {
+          if (arr[j] > arr[max]) {
+            max = j;
+          }
+        }
+        temp = arr[max];
+        arr[max] = arr[i];
+        arr[i] = temp;
+      }
+      for (let i = 0; i < arr.length; i++) {
+        //순위 계산 구현 (공동순위 체크)
+        if (i === 0) {
+          answer += `${rank} `;
+          rank++;
+        } else if (i !== 0 && arr[i - 1] === arr[i]) {
+          answer += `${rank} `;
+        } else if (i !== 0 && arr[i - 1] !== arr[i]) {
+          rank = i + 1;
+          answer += `${rank} `;
+        }
+      }
+      return answer;
+    }
+
+    let arr = [92, 92, 92, 100, 76];
+    console.log(solution(arr));
+  </script> -->
