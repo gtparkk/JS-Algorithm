@@ -1,0 +1,56 @@
+<!-- 알파벳 대문자로 이루어진 문자열을 입력받아 같은 문자가 연속으로 반복되는 경우 ,
+    반복되는 문자 바로 오른쪽에 반복 횟수를 표기하는 방법으로 문자열을 압축하는 프로그램을 작성하시오. 
+    단 반복횟수가 1인 경우 생략합니다. -->
+<!-- 강의 풀이 -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = "";
+        let cnt = 1;
+        s += " ";
+        for (let i = 0; i < s.length - 1; i++) {
+          if (s[i] === s[i + 1]) cnt++;
+          else {
+            answer += s[i];
+            if (cnt >= 1) answer += String(cnt);
+            cnt = 1;
+          }
+        }
+
+        return answer;
+      }
+      let str = "KKHSSSSSSSE";
+      console.log(solution(str));
+    </script>
+  </body>
+</html>
+
+<!-- 내 풀이 -->
+<!-- function solution(s) {
+    let answer = "",
+      count = 1;
+    for (let i = 0; i < s.length; i++) {
+      if (i === 0) {
+        answer += s[0];
+      } else if (1 <= i && i < s.length - 1) {
+        if (s[i - 1] === s[i]) count++;
+        else {
+          if (count !== 1) answer += count;
+          count = 1;
+          answer += s[i];
+        }
+      } else if (i === s.length - 1) {
+        if (s[i - 1] === s[i]) answer += ++count;
+        else {
+          if (count !== 1) answer += count;
+          answer += s[i];
+        }
+      }
+    }
+    return answer;
+  } -->
