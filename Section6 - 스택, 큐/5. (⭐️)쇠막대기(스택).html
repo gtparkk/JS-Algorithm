@@ -1,0 +1,33 @@
+<!-- 쇠막대기(스택) 문제생략 -->
+
+<!-- '('를 만났을때 스택에 추가해주고, ')'를 만났을떄 몇개의 조각이 생기는지 확인 -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = 0;
+        let stack = [];
+        for (let i = 0; i < s.length; i++) {
+          if (s[i] === "(") stack.push(s[i]);
+          else {
+            if (s[i - 1] === "(") {
+              stack.pop();
+              answer += stack.length;
+            } else {
+              stack.pop();
+              answer++;
+            }
+          }
+        }
+        return answer;
+      }
+
+      let a = "()(((()())(())()))(())";
+      console.log(solution(a));
+    </script>
+  </body>
+</html>
