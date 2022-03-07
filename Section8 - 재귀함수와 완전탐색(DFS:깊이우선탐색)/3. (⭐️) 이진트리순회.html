@@ -4,7 +4,8 @@
 중위순회 출력 : 4 2 5 1 6 3 7 
 후위순회 출력 : 4 5 2 6 7 3 1 -->
 
-<!-- 전위순회 -->
+<!-- 전위,중위,후위 순회의 개념체크 + 스택프레임 그려보고 이해하기 -->
+<!-- 아래코드는 전위순회 -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -13,7 +14,7 @@
   <body>
     <script>
       function solution(n) {
-        let answer = "";
+        let answer;
         function DFS(n) {
           if (n > 7) return;
           else {
