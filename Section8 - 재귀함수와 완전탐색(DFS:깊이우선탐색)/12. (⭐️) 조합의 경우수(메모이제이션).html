@@ -1,0 +1,39 @@
+<!-- 문제 생략
+▣ 입력설명
+첫째 줄에 자연수 n(3<=n<=33)과 r(0<=r<=n)이 입력됩니다.
+▣ 출력설명
+첫째 줄에 조합수를 출력합니다. -->
+
+<!-- 2차원배열에 조합의 경우수를 저장해놓음으로써, 빠른계산이 가능해진다. -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(n, r) {
+        let answer = [];
+        let dy = Array.from(Array(35), () => Array(35).fill(0)); //2차원배열 35,35를 생성하고 0으로 채워넣는다.
+        function DFS(n, r) {
+          if (dy[n][r] > 0) return dy[n][r];
+          if (n === r || r === 0) return 1;
+          else return (dy[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r));
+        }
+        answer = DFS(n, r);
+        return answer;
+      }
+
+      console.log(solution(33, 19));
+    </script>
+  </body>
+</html>
+
+<!-- 아래 DFS함수는 33C19와 같이 n,r이 커진경우 계산이 오래걸린다. -->
+<!-- function DFS(n, r) {
+    if (n === r || r === 0) return 1;
+    else return DFS(n - 1, r - 1) + DFS(n - 1, r); 
+  }
+  answer = DFS(n, r);
+  return answer;
+} -->
