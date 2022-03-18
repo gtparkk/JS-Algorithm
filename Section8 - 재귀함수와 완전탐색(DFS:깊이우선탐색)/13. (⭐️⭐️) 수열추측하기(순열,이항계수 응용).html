@@ -13,6 +13,8 @@ N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는
 ▣ 출력설명
 첫째 줄에 삼각형에서 가장 위에 들어갈 N개의 숫자를 빈 칸을 사이에 두고 출력한다. 답이 존재 하지 않는 경우는 입력으로 주어지지 않는다. -->
 
+<!-- 어려움..
+  순열구하기 + 조합(nCr)구하기 (메모이제이션 배열활용) -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -22,15 +24,18 @@ N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는
     <script>
       function solution(n, f) {
         let answer,
-          flag = 0;
-        let dy = Array.from(Array(11), () => Array(11).fill(0));
-        let ch = Array.from({ length: n + 1 }, () => 0);
-        let p = Array.from({ length: n }, () => 0);
-        let b = Array.from({ length: n }, () => 0);
+          flag = 0; //답이 구해진경우 더이상 답을 구할필요가 없으므로, flag를 두어 체크한다.
+        let memo = Array.from(Array(11), () => Array(11).fill(0)); //조합구하기시 메모이제이션용 배열
+        let check = Array.from({ length: n + 1 }, () => 0); //순열구하기시 체크배열
+        let p = []; //순열의 배열
+        let b = Array.from({ length: n }, () => 0); //nCr 결과 저장용 배열
         function combi(n, r) {
-          if (dy[n][r] > 0) return dy[n][r];
+          if (memo[n][r] != 0) return memo[n][r];
           if (n === r || r === 0) return 1;
-          else return (dy[n][r] = combi(n - 1, r - 1) + combi(n - 1, r));
+          else {
+            memo[n][r] = combi(n - 1, r - 1) + combi(n - 1, r);
+            return memo[n][r];
+          }
         }
         function DFS(L, sum) {
           if (flag) return;
@@ -39,16 +44,18 @@ N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는
             flag = 1;
           } else {
             for (let i = 1; i <= n; i++) {
-              if (ch[i] === 0) {
-                ch[i] = 1;
-                p[L] = i;
+              if (check[i] === 0) {
+                check[i] = 1;
+                p.push(i);
                 DFS(L + 1, sum + b[L] * p[L]);
-                ch[i] = 0;
+                check[i] = 0;
+                p.pop();
               }
             }
           }
         }
-        for (let i = 0; i < n; i++) {
+        for (i = 0; i < n; i++) {
+          //n이 4인경우, 3C0,3C1,3C2,3C3의 결과를 b배열에 저장한다.
           b[i] = combi(n - 1, i);
         }
         DFS(0, 0);
