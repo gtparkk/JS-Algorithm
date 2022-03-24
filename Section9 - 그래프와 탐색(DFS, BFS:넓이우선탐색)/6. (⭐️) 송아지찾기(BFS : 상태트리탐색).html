@@ -1,0 +1,78 @@
+<!-- 현수는 송아지를 잃어버렸다. 다행히 송아지에는 위치추적기가 달려 있다. 
+현수의 위치와 송아 지의 위치가 수직선상의 좌표 점으로 주어지면 현수는 현재 위치에서 송아지의 위치까지 다음 과 같은 방법으로 이동한다. 
+송아지는 움직이지 않고 제자리에 있다. 현수는 스카이 콩콩을 타고 가는데 한 번의 점프로 앞으로 1, 뒤로 1, 앞으로 5를 이동할 수 있다. 
+최소 몇 번의 점프로 현수가 송아지의 위치까지 갈 수 있는지 구하는 프로그램을 작성 하세요.
+
+▣ 입력설명
+첫 번째 줄에 현수의 위치 S와 송아지의 위치 E가 주어진다. 직선의 좌표 점은 1부터 10,000 까지이다.
+
+▣ 출력설명
+점프의 최소횟수를 구한다. 답은 1이상입니다. -->
+
+<!-- (풀이방법1) 레벨을 사용한 풀이 
+   ※ 이 방법이, 풀이방법2보다 메모리가 더 절약된다는 장점이 있다. (시간복잡도는 동일함) ※
+
+1. 체크배열을 만들어서 queue에 추가된적이 있던값은 queue에 추가되지 않도록 한다. (시간복잡도 줄이기)
+2. ⭐️ 이중for문을 실행하기전 queue의 크기를 기록한다.
+3. 외부 for문은 queue의 크기만큼 반복하며 queue.shift하며, 내부 for문은 v+1,v-1,v+5 가 결과값인지 체크하면서(발견시 return) push한다.
+4. queue에 값을 push하는 시점에 `값===e` 인지 체크한다.
+-->
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s, e) {
+        let check = Array.from({ length: 10001 }, () => 0);
+        let L = 0;
+        let queue = [];
+        queue.push(s);
+        while (queue.length != 0) {
+          let len = queue.length;
+          for (let i = 0; i < len; i++) {
+            let v = queue.shift();
+            for (let nv of [v + 1, v - 1, v + 5]) {
+              if (nv === e) return L + 1;
+              if (nv >= 0 && nv <= 10000 && check[nv] === 0) {
+                queue.push(nv);
+                check[nv] = 1;
+              }
+            }
+          }
+          L++;
+        }
+      }
+      console.log(solution(5, 14));
+    </script>
+  </body>
+</html>
+
+<!-- (풀이방법2) dis배열을 이용한 풀이
+1. 체크배열을 만들어서 queue에 추가된적이 있던값은 queue에 추가되지 않도록 한다. (시간복잡도 줄이기)
+2. queue에 값을 push하는 시점에 `값===e` 인지 체크한다.
+3. ⭐️ distance(dis[].fill(0))배열을 만들어서 시작점인 dis[5]=0을 넣고, dis[4]/dis[6]/dis[10]에는 1을 넣는다. (dis[nv]=dis[v]+1)
+   결과값은 distance[14]가 된다.
+
+         function solution(s, e) {
+        let check = Array.from({ length: 10001 }, () => 0);
+        let dis = Array.from({ length: 10001 }, () => 0);
+        let queue = [];
+        check[s] = 1;
+        dis[s] = 0;
+        queue.push(s);
+        while (queue.length != 0) {
+          let v = queue.shift();
+          for (let nv of [v + 1, v - 1, v + 5]) {
+            if (nv === e) return dis[v] + 1;
+            if (check[nv] === 0 && nv >= 0 && nv <= 10000) {
+              check[nv] = 1;
+              dis[nv] = dis[v] + 1;
+              queue.push(nv);
+            }
+          }
+        }
+      }
+-->
