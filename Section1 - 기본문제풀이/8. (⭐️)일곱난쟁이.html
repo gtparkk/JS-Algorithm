@@ -8,27 +8,47 @@
   <body>
     <script>
       function solution(arr) {
-        let answer = arr;
+        let answer = [];
         let sum = 0;
-        for (let item of answer) {
-          sum += item;
-        }
-        console.log(sum);
-        loop1: for (let i = 0; i < arr.length - 1; i++) {
-          loop2: for (let j = i + 1; j < arr.length; j++) {
-            if (sum - arr[i] - arr[j] === 100) {
-              console.log(`${arr[i]},${arr[j]}`);
-              answer.splice(j, 1); // i번쨰 요소부터 지우면, j가 가리키던 요소가 달라지는문제가 있기때문에 j부터 지운다.
-              answer.splice(i, 1);
-              break loop1; // 한번 값을 찾았으면 이중루프 탈출하기위해 for문별로 loop1, loop2 명칭을 지정해줌.
-            }
+        function DFS(L) {
+          if (L === 7 && sum === 100) {
+            console.log(pick);
+            return;
+          } else {
+            answer.push(arr[L]);
+            sum += arr[L];
+            DFS(L + 1);
+            answer.pop();
+            sum -= arr[L];
+            DFS(L + 1);
           }
         }
-        return answer;
+        DFS(0);
       }
 
       let arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
-      console.log(solution(arr));
+      solution(arr);
     </script>
   </body>
 </html>
+
+<!-- 기존풀이
+function solution(arr) {
+  let answer = arr;
+  let sum = 0;
+  for (let item of answer) {
+    sum += item;
+  }
+  console.log(sum);
+  loop1: for (let i = 0; i < arr.length - 1; i++) {
+    loop2: for (let j = i + 1; j < arr.length; j++) {
+      if (sum - arr[i] - arr[j] === 100) {
+        console.log(`${arr[i]},${arr[j]}`);
+        answer.splice(j, 1); // i번쨰 요소부터 지우면, j가 가리키던 요소가 달라지는문제가 있기때문에 j부터 지운다.
+        answer.splice(i, 1);
+        break loop1; // 한번 값을 찾았으면 이중루프 탈출하기위해 for문별로 loop1, loop2 명칭을 지정해줌.
+      }
+    }
+  }
+  return answer;
+} -->
