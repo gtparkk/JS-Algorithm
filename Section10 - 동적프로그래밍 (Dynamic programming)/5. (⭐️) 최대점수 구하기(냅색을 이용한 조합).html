@@ -10,6 +10,15 @@
 ▣ 출력설명
 첫 번째 줄에 제한 시간안에 얻을 수 있는 최대 점수를 출력합니다. -->
 
+<!-- 풀이포인트
+1. 주어진시간만큼을 길이로갖는 dy배열을 생성하고, 0으로 초기화한다.
+2. dy[j]에는, j라는 시간동안 얻을수 있는 최대점수를 넣는다.
+    eg. dy[15]에는 15분동안 얻을수 있는 최대점수
+3. 이중for문을 돌면서, 외부 for문에서는 arr배열을 돌면서 i번째에 해당하는 문제를 푼다고 가정하고, dy배열에 최대점수값을 넣는다. 
+    ⭐️이때, 10.4(동전교환)문제와의 차이점은, 중복으로 쓸수있냐 없냐이다.
+    ⭐️(해결방법) j의 범위를 `m~해당문제를푸는시간(pt[i])`로 두고, j값을 감소시키며 반복문을 돈다.
+4. dy[j]=Math.max(dy[j],dy[j-pt]+ps)  -->
+
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -21,8 +30,8 @@
         let answer = 0;
         let dy = Array.from({ length: m + 1 }, () => 0);
         for (let i = 0; i < arr.length; i++) {
-          let ps = arr[i][0];
-          let pt = arr[i][1];
+          let ps = arr[i][0]; // ps는 problem score
+          let pt = arr[i][1]; // pt는 problem time
           for (let j = m; j >= pt; j--) {
             dy[j] = Math.max(dy[j], dy[j - pt] + ps);
           }
