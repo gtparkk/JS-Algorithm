@@ -10,10 +10,11 @@
       function solution(s) {
         let answer = ""; //참고, answer=s 는 값이 복사될뿐, 참조값이 복사되지않는다. (배열과 다름)
         answer = s.replace(/A/g, "#"); //정규표현식을 사용했으며, g는 global (정규표현식에 해당하는 모든요소를 변환).. g가 없으면 처음나오는 A만#으로 변환됨.
+        //숫자를 #으로 변경하려면.. s.replace(/[0-9]/g,"#");
         return answer;
       }
 
-      let str = "BANANA";
+      let str = "BANANA123";
       console.log(solution(str));
     </script>
   </body>

@@ -1,5 +1,10 @@
 <!-- 가짜가 섞인 아홉명의 난쟁이가 있을때, 일곱명의 진짜 난쟁이의 키의합이 100이되는 조건이 주어졌다. 7명의 진짜 난쟁이를 찾아라.-->
 <!-- 아홉난쟁이의 키는 모두 다르며, 답이 여러개인 경우에는 아무거나 출력한다.-->
+
+<!-- DFS를 활용한 풀이포인트
+1. 레벨 0~9까지 재귀함수를 실행한다.
+2. arr[i]를 넣은경우와, 안넣은경우를 나눠 재귀를 실행하고, 재귀함수의 매개변수는 (레벨,합계)이다. 
+3. 답을 하나만 출력하면 되므로, flag를 두어 답을 발견한경우 flag=1로 설정 -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -8,26 +13,29 @@
   <body>
     <script>
       function solution(arr) {
+        let pick = [];
         let answer = [];
-        let sum = 0;
-        function DFS(L) {
-          if (L === 7 && sum === 100) {
-            console.log(pick);
-            return;
-          } else {
-            answer.push(arr[L]);
-            sum += arr[L];
-            DFS(L + 1);
-            answer.pop();
-            sum -= arr[L];
-            DFS(L + 1);
+        let flag = 0;
+        function DFS(L, sum) {
+          if (flag) return;
+          if (L <= 9) {
+            if (pick.length === 7 && sum === 100) {
+              flag = 1;
+              answer = pick.slice();
+            } else if (L !== 9) {
+              pick.push(arr[L]);
+              DFS(L + 1, sum + arr[L]);
+              pick.pop();
+              DFS(L + 1, sum);
+            } else return;
           }
         }
-        DFS(0);
+        DFS(0, 0);
+        return answer;
       }
 
       let arr = [20, 7, 23, 19, 10, 15, 25, 8, 13];
-      solution(arr);
+      console.log(solution(arr));
     </script>
   </body>
 </html>
