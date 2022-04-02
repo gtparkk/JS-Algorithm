@@ -1,0 +1,45 @@
+<!-- N개의 문자열이 입력되면 중복된 문자열은 제거하고 출력하는 프로그램을 작성하세요. 출력하는 문자열은 원래의 입력순서를 유지합니다.
+
+▣ 입력설명
+첫 줄에 자연수 N이 주어진다.(3<=N<=30)
+두 번째 줄부터 N개의 문자열이 주어진다. 문자열의 길이는 100을 넘지 않습니다.
+
+▣ 출력설명
+첫 줄부터 중복이 제거된 문자열을 차례로 출력한다. -->
+
+<!-- 풀이방법 2가지 
+  a. array.indexOf를 사용하여, for문을 돌며 단어가 최초로 발견된 인덱스가 현재 인덱스와 동일한지 체크
+  b. array.filter & array.indexOf 을 사용하여, filter의 str,index 매개변수를 활용하여 indexOf(str)===index를 만족하는 경우만 필터링
+-->
+
+<!-- ※ 참고사항으로, 만약 str이 문자열이라면 str.split(' ')으로 배열로 만든뒤, 중복제거후 x.join(' ')으로 다시 문장화 하면된다. -->
+
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(s) {
+        let answer = [];
+        for (let i = 0; i < s.length; i++) {
+          if (s.indexOf(s[i]) === i) answer.push(s[i]);
+        }
+        return answer;
+      }
+      let str = ["good", "time", "good", "time", "student"];
+      console.log(solution(str));
+    </script>
+  </body>
+</html>
+
+<!-- string.filter()을 사용한 풀이방법
+  function solution(s) {
+    let answer;
+    answer = s.filter((str, index) => {
+      return s.indexOf(str) === index;
+    });
+    return answer;
+  }
+-->
