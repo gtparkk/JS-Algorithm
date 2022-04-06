@@ -5,9 +5,16 @@
 
 ▣ 입력설명
 첫 줄에 N(5<=N<=100,000)과 M(2<=K<=N)가 주어집니다.
-두 번째 줄에 N개의 숫자열이 주어집니다. 각 숫자는 500이하의 음이 아닌 정수입니다. -->
+두 번째 줄에 N개의 숫자열이 주어집니다. 각 숫자는 500이하의 음이 아닌 정수입니다.
 
-<!-- 중복연산 없도록(eg. for문 한번돌때마다 전체 sum값 다시구하기) , 다시풀어보기 -->
+▣ 출력설명
+첫 줄에 최대 매출액을 출력합니다. -->
+
+<!-- 풀이포인트 (시간복잡도 O(n))
+1. 2중for문이 아닌, for문 2회수행
+2. 1번째 for문에서 합구하고, answer에 대입
+3. 2번째 for문에서 sum+=arr[i]-arr[i-k] 를 한 후 max(answer,sum)구하기
+-->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -16,16 +23,13 @@
   <body>
     <script>
       function solution(k, arr) {
-        let answer,
-          lt = 0,
-          sum = 0,
-          max = Number.MIN_SAFE_INTEGER;
+        let answer = 0;
+        let sum = 0;
         for (let i = 0; i < k; i++) sum += arr[i];
         answer = sum;
-        for (let rt = k; rt < arr.length; rt++) {
-          sum += arr[rt] - arr[lt++];
-          answer = Math.max(sum, answer);
-          console.log(sum, answer);
+        for (let i = k; i < arr.length; i++) {
+          sum += arr[i] - arr[i - k];
+          answer = Math.max(answer, sum);
         }
         return answer;
       }
@@ -36,14 +40,14 @@
   </body>
 </html>
 
-<!-- 답변풀이 -->
-<!-- function solution(k, arr) {
-  let answer,
-    sum = 0;
-  for (let i = 0; i < k; i++) sum += arr[i];
-  answer = sum;
-  for (let i = k; i < arr.length; i++) {
-    sum += arr[i] - arr[i - k];
+<!-- 기존 내 풀이 (시간복잠도 O(n^2))
+  function solution(k, arr) {
+  let answer = 0;
+  for (let lt = 0; lt < arr.length - 2; lt++) {
+    let sum = 0;
+    for (let i = 0; i < k; i++) {
+      sum += arr[lt + i];
+    }
     answer = Math.max(answer, sum);
   }
   return answer;
