@@ -8,7 +8,10 @@
 오름차순으로 정렬된 수열을 출력합니다. -->
 
 <!-- 삽입정렬은 손코딩할 가능성있으므로 연습필요 -->
-<!-- temp=arr[i], j는 i-1~0 감소, arr[j+1]=temp -->
+<!-- 풀이포인트
+  1. 1차 for문에서 i = 1~arr.length 순회, key=arr[i] 저장
+  2. 2차 for문에서 j = i-1~0 순회, key<arr[j] 이면 arr[j]와 arr[j+1]교체 
+-->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -19,13 +22,12 @@
       function solution(arr) {
         let answer = arr;
         for (let i = 1; i < arr.length; i++) {
-          let temp = arr[i];
-          let j;
-          for (j = i - 1; j >= 0; j--) {
-            if (arr[j] > temp) arr[j + 1] = arr[j];
+          let key = answer[i];
+          for (let j = i - 1; j >= 0; j--) {
+            if (key < answer[j])
+              [answer[j], answer[j + 1]] = [answer[j + 1], answer[j]];
             else break;
           }
-          arr[j + 1] = temp;
         }
         return answer;
       }
