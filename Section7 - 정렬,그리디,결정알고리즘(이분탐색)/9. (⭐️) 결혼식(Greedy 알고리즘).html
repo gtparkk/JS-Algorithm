@@ -12,7 +12,12 @@
 ▣ 출력설명
 첫째 줄에 피로연장에 동시에 존재하는 최대 인원을 출력하세요. -->
 
-<!-- 시작시간과 마침시간 구분, 시간순정렬 후 도착/가는순정렬, for문 max count추출 -->
+<!-- 풀이포인트
+  1. 도착시간과 떠나는시간을 새로운 배열에 추가 (도착 : 0, 떠남 : 1)
+  2. 시간순으로 정렬하고, 시간이 같은경우는 떠나는시간을 우선순위로 정렬
+  3. 새로만든배열을 순회하며, 도착시간인경우 cnt++, 떠남시간인경우 cnt--, 그리고 answer=Math.max(answer,cnt);
+-->
+
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -22,21 +27,19 @@
     <script>
       function solution(times) {
         let answer = Number.MIN_SAFE_INTEGER;
-        let timeLine = [];
-        for (let x of times) {
-          timeLine.push([x[0], "s"]);
-          timeLine.push([x[1], "e"]);
-        }
-
-        timeLine.sort((a, b) => {
-          if (a[0] === b[0]) return a[1].charCodeAt() - b[1].charCodeAt();
-          else return a[0] - b[0];
-        });
-
         let count = 0;
-        for (let x of timeLine) {
-          if (x[1] === "e") count--;
-          else count++;
+        let timeLine = [];
+        for (let row of times) {
+          timeLine.push([row[0], 0]);
+          timeLine.push([row[1], 1]);
+        }
+        timeLine.sort((a, b) => {
+          if (a[0] !== b[0]) return a[0] - b[0];
+          else return b[1] - a[1];
+        });
+        for (let time of timeLine) {
+          if (time[1] === 0) count++;
+          else count--;
           answer = Math.max(answer, count);
         }
         return answer;
