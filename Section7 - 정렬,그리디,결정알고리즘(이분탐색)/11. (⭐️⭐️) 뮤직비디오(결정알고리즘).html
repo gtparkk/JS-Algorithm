@@ -26,29 +26,34 @@
   </head>
   <body>
     <script>
-      function count(songs, size) {
+      function tapeCount(size, arr) {
         let count = 1;
         let sum = 0;
-        for (let i = 0; i < songs.length; i++) {
-          if (sum + songs[i] <= size) sum += songs[i];
+
+        for (let x of arr) {
+          if (sum + x <= size) sum += x;
           else {
             count++;
-            sum = songs[i];
+            sum = x;
           }
         }
+
         return count;
       }
       function solution(m, songs) {
         let answer;
         let lt = Math.max(...songs);
-        let rt = songs.reduce((pre, cur) => pre + cur);
+        let rt = songs.reduce((prev, curr) => prev + curr, 0);
+
         while (lt <= rt) {
           let mid = Math.floor((lt + rt) / 2);
-          if (count(songs, mid) <= m) {
+
+          if (tapeCount(mid, songs) <= m) {
             answer = mid;
             rt = mid - 1;
           } else lt = mid + 1;
         }
+
         return answer;
       }
 
