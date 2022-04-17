@@ -16,11 +16,11 @@
     <script>
       function solution(n) {
         let answer = "";
-        function DFS(n) {
-          if (n === 0) return;
+        function DFS(L) {
+          if (L === 0) return;
           else {
-            DFS(Math.floor(n / 2));
-            answer += n % 2;
+            DFS(Math.floor(L / 2));
+            answer += L % 2;
           }
         }
         DFS(n);
