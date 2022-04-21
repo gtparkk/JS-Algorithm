@@ -16,24 +16,21 @@
     <script>
       function solution(m, arr) {
         let answer = [];
-        let n = arr.length;
-        let check = Array.from({ length: n }, () => 0);
-        let tmp = Array.from({ length: m }, () => 0);
-        function DFS(L) {
+        let check = Array.from({ length: arr.length }, () => 0);
+        function DFS(L, str) {
           if (L === m) {
-            answer.push(tmp.slice());
+            answer.push(str.trim());
           } else {
-            for (let i = 0; i < n; i++) {
-              if (check[i] === 0) {
+            for (let i = 0; i < check.length; i++) {
+              if (check[i] !== 1) {
                 check[i] = 1;
-                tmp[L] = arr[i];
-                DFS(L + 1);
+                DFS(L + 1, str + arr[i] + " ");
                 check[i] = 0;
               }
             }
           }
         }
-        DFS(0);
+        DFS(0, "");
         return answer;
       }
 
