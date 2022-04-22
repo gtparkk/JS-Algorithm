@@ -4,7 +4,8 @@
 ▣ 출력설명
 첫째 줄에 조합수를 출력합니다. -->
 
-<!-- 2차원배열에 조합의 경우수를 저장(메모이제이션)해놓음으로써, 빠른계산이 가능해진다. -->
+<!-- 풀이포인트
+  2차원배열에 조합의 경우수를 저장(메모이제이션)해놓음으로써, 빠른계산이 가능해진다. -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -13,12 +14,18 @@
   <body>
     <script>
       function solution(n, r) {
-        let answer = [];
-        let dy = Array.from(Array(35), () => Array(35).fill(0)); //2차원배열 35,35를 생성하고 0으로 채워넣는다.
+        let answer;
+        let ncr = Array.from({ length: n + 1 }, () =>
+          Array.from({ length: r + 1 }, () => 0)
+        );
         function DFS(n, r) {
-          if (dy[n][r] > 0) return dy[n][r];
-          if (n === r || r === 0) return 1;
-          else return (dy[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r));
+          if (ncr[n][r] != 0) return ncr[n][r];
+          if (n === r || r === 0) {
+            return 1;
+          } else {
+            ncr[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r);
+            return ncr[n][r];
+          }
         }
         answer = DFS(n, r);
         return answer;
