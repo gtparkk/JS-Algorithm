@@ -1,0 +1,80 @@
+<!-- 가장 윗줄에 1부터 N까지의 숫자가 한 개씩 적혀 있다. 그리고 둘째 줄부터 차례대로 파스칼 의 삼각형처럼 위의 두개를 더한 값이 저장되게 된다. 
+    예를 들어 N이 4 이고 가장 윗 줄에 3 1 2 4 가 있다고 했을 때, 다음과 같은 삼각형이 그려진다.
+3  1  2  4 
+ 4  3  6 
+  7   9
+    16
+N과 가장 밑에 있는 숫자가 주어져 있을 때 가장 윗줄에 있는 숫자를 구하는 프로그램을 작성하 시오. 
+단, 답이 여러가지가 나오는 경우에는 사전순으로 가장 앞에 오는 것을 출력하여야 한다.
+
+▣ 입력설명
+첫째 줄에 두개의 정수 N(1≤N≤10)과 F가 주어진다. 
+N은 가장 윗줄에 있는 숫자의 개수를 의 미하며 F는 가장 밑에 줄에 있는 수로 1,000,000 이하이다.
+
+▣ 출력설명
+첫째 줄에 삼각형에서 가장 위에 들어갈 N개의 숫자를 빈 칸을 사이에 두고 출력한다. 답이 존재 하지 않는 경우는 입력으로 주어지지 않는다. -->
+
+<!--
+  풀이포인트
+  1. 파스칼삼각형은 조합(nCr)과 연관되어있다.
+  2. 1      2       3       4 순열이 있을경우, 
+      1+2      2+3      3+4
+       1+2+2+3     2+3+3+4
+         1+2+2+2+3+3+3+4
+  즉, 1*3C0 + 2*3C1 + 3*3C2 + 4*3C3 이다.
+  3. 순열구하기 + 조합(nCr)구하기 (메모이제이션 배열활용) -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(n, f) {
+        let answer = [];
+        let flag = 0;
+        let ncr = Array.from({ length: n + 1 }, () =>
+          Array.from({ length: n + 1 }, () => 0)
+        );
+        let check = Array.from({ length: n + 1 }, () => 0);
+        let numbers = [];
+
+        function getCombination(n, r) {
+          if (ncr[n][r] != 0) return ncr[n][r];
+          if (n === r || r === 0) {
+            return 1;
+          } else {
+            ncr[n][r] = getCombination(n - 1, r - 1) + getCombination(n - 1, r);
+            return ncr[n][r];
+          }
+        }
+
+        function DFS(L, sum) {
+          if (flag === 1) return;
+          if (L === n) {
+            if (sum === f) {
+              flag = 1;
+              answer = numbers.slice();
+            } else {
+              return;
+            }
+          } else {
+            for (let i = 1; i <= n; i++) {
+              if (check[i] === 0) {
+                check[i] = 1;
+                numbers.push(i);
+                DFS(L + 1, sum + i * getCombination(n - 1, L));
+                check[i] = 0;
+                numbers.pop();
+              }
+            }
+          }
+        }
+        DFS(0, 0);
+        return answer;
+      }
+
+      console.log(solution(4, 16));
+    </script>
+  </body>
+</html>
