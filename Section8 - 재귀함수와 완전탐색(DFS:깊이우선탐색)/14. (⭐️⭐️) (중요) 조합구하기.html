@@ -26,15 +26,15 @@
             answer.push(arr.slice());
           } else {
             for (let i = min; i <= n; i++) {
-              arr[L] = i + 1;
+              arr[L] = i;
               DFS(L + 1, i + 1);
             }
           }
         }
-        DFS(0, 0);
+        DFS(0, 1);
         return answer;
       }
-      console.log(solution(4, 3));
+      console.log(solution(4, 2));
     </script>
   </body>
 </html>
