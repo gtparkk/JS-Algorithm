@@ -4,22 +4,21 @@
 125
 13425
 1345
-1425
+1425 
 145
-총 6 가지입니다. (방향그래프 생략)
+총 6 가지입니다. (그래프는 생략)
 
 ▣ 입력설명
 첫째 줄에는 정점의 수 N(1<=N<=20)와 간선의 수 M가 주어진다. 그 다음부터 M줄에 걸쳐 연 결정보가 주어진다.
-
 ▣ 출력설명
 총 가지수를 출력한다. -->
 
 <!-- 새로배운개념이라 ⭐️표시 -->
 <!-- 풀이포인트
-  2차원배열의 행열수를 Vertex(정점)의 수+1 만큼 만들어놓고 시작한다.
-  메모리를 많이 차지하고, 2차원배열크기만큼 for문을 돌아야 하므로, 
-  ⭐️노드개수가 적을때 적용 -->
-
+  2차원배열의 행크기는 Vertex(정점)의 수+1 만큼 만들어놓고,
+  2차원배열의 열은 빈배열로 한뒤, graph.push를 통해 크기가 지정된다.
+  메모리를 적게 차지하고, 그만큼 적게 for문을 돌아도 되므로,
+  ⭐️노드개수가 많을때 적용 -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -29,30 +28,25 @@
     <script>
       function solution(n, arr) {
         let answer = 0;
-        //1번 인덱스부터 사용할거기 때문에, 행열의 크기는 n+1이다.
-        let graph = Array.from(Array(n + 1), () => Array(n + 1).fill(0));
-        let check = Array.from({ length: n + 1 }, () => 0);
-        let path = [1];
-        for (let [a, b] of arr) {
-          graph[a][b] = 1;
+        const graph = Array.from({ length: n + 1 }, () => Array());
+        const check = Array.from({ length: n + 1 }, () => 0);
+        check[1] = 1;
+        for (let [row, col] of arr) {
+          graph[row].push(col);
         }
         function DFS(v) {
           if (v === n) {
             answer++;
-            console.log(path);
           } else {
-            for (let i = 1; i <= n; i++) {
-              if (graph[v][i] === 1 && check[i] === 0) {
-                check[i] = 1;
-                path.push(i);
-                DFS(i);
-                check[i] = 0;
-                path.pop();
+            for (let i = 0; i < graph[v].length; i++) {
+              if (check[graph[v][i]] === 0) {
+                check[graph[v][i]] = 1;
+                DFS(graph[v][i]);
+                check[graph[v][i]] = 0;
               }
             }
           }
         }
-        check[1] = 1; //⭐️중요! check[1]을 1로 기록하는 과정이 없으므로 체크후 DFS를 시작해야한다.
         DFS(1);
         return answer;
       }
