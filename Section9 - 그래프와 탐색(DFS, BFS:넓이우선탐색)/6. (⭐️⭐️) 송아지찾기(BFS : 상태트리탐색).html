@@ -13,9 +13,8 @@
    ※ 이 방법이, 풀이방법2보다 메모리가 더 절약된다는 장점이 있다. (시간복잡도는 동일함) ※
 
 1. 체크배열을 만들어서 queue에 추가된적이 있던값은 queue에 추가되지 않도록 한다. (시간복잡도 줄이기)
-2. ⭐️ 이중for문을 실행하기전 queue의 크기를 기록한다.
-3. 외부 for문은 queue의 크기만큼 반복하며 queue.shift하며, 내부 for문은 v+1,v-1,v+5 가 결과값인지 체크하면서(발견시 return) push한다.
-4. queue에 값을 push하는 시점에 `값===e` 인지 체크한다.
+2. ⭐️ 이중for문을 실행하기전 queue의 크기를 기록하고 for문은 기록된 queue의 크기만큼 반복한다.
+3. 외부 for문은 반복하며 queue.shift하며, 내부 for문은 v+1,v-1,v+5 가 결과값인지 체크하면서(발견시 return) 결과값이 아니고, check배열을 확인한뒤 push한다.
 -->
 
 <html>
@@ -28,15 +27,17 @@
       function solution(s, e) {
         let check = Array.from({ length: 10001 }, () => 0);
         let L = 0;
-        let queue = [];
-        queue.push(s);
+        let queue = [s];
+
         while (queue.length != 0) {
-          let len = queue.length;
-          for (let i = 0; i < len; i++) {
-            let v = queue.shift();
+          const n = queue.length;
+
+          for (let i = 0; i < n; i++) {
+            const v = queue.shift();
+
             for (let nv of [v + 1, v - 1, v + 5]) {
               if (nv === e) return L + 1;
-              if (nv >= 0 && nv <= 10000 && check[nv] === 0) {
+              if (check[nv] === 0) {
                 queue.push(nv);
                 check[nv] = 1;
               }
