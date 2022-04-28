@@ -13,7 +13,8 @@
 <!-- 풀이포인트
 1. 2중for문으로 전체 격자판을 돌면서 1이 발견될경우 count를 1늘리고, DFS재귀함수를 호출한다.
 2. 재귀함수에서는 8방향으로 돌면서 1이 발견될경우 0으로 바꿔가며 전진한다. 
-3. 8방향 체크에는 dx배열(행), dy배열(열)을 사용한다. -->
+3. 8방향 체크에는 dx배열(행), dy배열(열)을 사용한다.
+4. 2차원배열의 복사는 map과 slice를 사용한다. -->
 
 <html>
   <head>
@@ -24,27 +25,35 @@
     <script>
       function solution(board) {
         let answer = 0;
-        let n = board.length;
-        let dx = [-1, -1, 0, 1, 1, 1, 0, -1]; //행
-        let dy = [0, 1, 1, 1, 0, -1, -1, -1]; //열
-
-        function DFS(x, y) {
-          board[x][y] = 0;
-          for (let i = 0; i < 8; i++) {
-            let nx = x + dx[i];
-            let ny = y + dy[i];
-            if (nx >= 0 && nx < n && ny >= 0 && ny < n && board[nx][ny] === 1)
-              DFS(nx, ny);
-          }
-        }
-        for (let i = 0; i < n; i++) {
-          for (let j = 0; j < n; j++) {
+        const dRow = [-1, -1, 0, 1, 1, 1, 0, -1];
+        const dCol = [0, 1, 1, 1, 0, -1, -1, -1];
+        for (let i = 0; i < board.length; i++) {
+          for (let j = 0; j < board.length; j++) {
             if (board[i][j] === 1) {
               answer++;
               DFS(i, j);
+              const boardCapture = board.map((row) => row.slice());
+              console.log(answer, boardCapture);
             }
           }
         }
+        function DFS(row, col) {
+          board[row][col] = 0;
+          for (let i = 0; i < 8; i++) {
+            const nRow = row + dRow[i];
+            const nCol = col + dCol[i];
+            if (
+              nRow >= 0 &&
+              nRow < board.length &&
+              nCol >= 0 &&
+              nCol < board.length &&
+              board[nRow][nCol] === 1
+            ) {
+              DFS(nRow, nCol);
+            }
+          }
+        }
+        DFS(0, 0);
         return answer;
       }
 
