@@ -17,7 +17,11 @@
  2. dy[i]에는 i금액을 거슬러주는데 사용된 최소동전개수를 저장한다. (dy[0]=0으로 초기화 )
  3. 2중 for문울 돌면서, 외부for문에는 coin[i]를 순회하고, 내부for문에는 dy[j]를 순회하면서 dy[j-coin[i]]+1 값이 기존의 dy[j]보다 작은경우 대입한다.
     (이때 내부for문 j의 범위는 `coin[i]~m`)
- -->
+
+  ※ 3번내용의 포인트는 dy[j]에는 j원을 만들기위한 최소 동전의 개수가 들어있을것이고, 
+  j-coin[i] 를 한 이유는 해당 금액에서 코인가격만큼을 뺀 금액의 최소동전개수에서 +1한 값을 구하기 위해서이다.
+  ( eg. 6원의 최소 동전개수는 5원의 최소동전개수+1 & 4원의 최소동전개수+1 & 1원의 최소동전개수+1 중 최소값이다. )
+-->
 
 <html>
   <head>
@@ -28,14 +32,13 @@
     <script>
       function solution(m, coin) {
         let answer = 0;
-        let dy = Array.from({ length: m + 1 }, () => 10000);
+        const dy = Array(m + 1).fill(100);
         dy[0] = 0;
         for (let i = 0; i < coin.length; i++) {
           for (let j = coin[i]; j <= m; j++) {
             dy[j] = Math.min(dy[j], dy[j - coin[i]] + 1);
           }
         }
-        //console.log(dy);
         answer = dy[m];
         return answer;
       }
