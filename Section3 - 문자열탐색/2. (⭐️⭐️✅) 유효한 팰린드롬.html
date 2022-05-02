@@ -19,11 +19,9 @@
   <body>
     <script>
       function solution(s) {
-        let answer = "YES";
+        let answer = "NO";
         s = s.toLowerCase().replace(/[^a-z]/g, "");
-        if (s.split("").reverse().join("") !== s) answer = "NO";
-
-        console.log(s);
+        if (s === s.split("").reverse().join("")) answer = "YES";
         return answer;
       }
 
@@ -32,10 +30,3 @@
     </script>
   </body>
 </html>
-
-<!-- function solution(s) {
-  let answer = "YES";
-  s = s.toLowerCase().replace(/[^a-z]/g, ""); //문자열을 소문자로 바꾸고, a-z가 아닌 것을 모두찾아 공백으로 변경.
-  if (s.split("").reverse().join("") !== s) answer = "NO";
-  return answer;
-} -->

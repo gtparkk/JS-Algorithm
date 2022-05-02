@@ -20,12 +20,14 @@
     <script>
       function solution(s) {
         let answer = "YES";
-        s = s.toLowerCase();
-        if (s.split("").reverse().join("") !== s) answer = "NO";
+
+        if (s.toLowerCase() !== s.split("").reverse().join("").toLowerCase()) {
+          answer = "NO";
+        }
+
         return answer;
       }
-
-      let str = "gooogG";
+      let str = "gooG";
       console.log(solution(str));
     </script>
   </body>
@@ -56,3 +58,9 @@
 
 
  -->
+<!-- function solution(s) {
+  let answer = "YES";
+  s = s.toLowerCase();
+  if (s.split("").reverse().join("") !== s) answer = "NO";
+  return answer;
+} -->
