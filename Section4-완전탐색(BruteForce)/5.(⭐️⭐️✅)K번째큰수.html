@@ -22,19 +22,18 @@
   <body>
     <script>
       function solution(n, k, card) {
-        let answer;
-        let sum;
-        let sumArr = [];
         const sumSet = new Set();
+        let sumArr;
+        let answer;
+
         for (let i = 0; i < card.length - 2; i++) {
           for (let j = i + 1; j < card.length - 1; j++) {
-            sum = 0;
             for (let k = j + 1; k < card.length; k++) {
-              sum = card[i] + card[j] + card[k];
-              sumSet.add(sum);
+              sumSet.add(card[i] + card[j] + card[k]);
             }
           }
         }
+
         sumArr = Array.from(sumSet).sort((a, b) => b - a);
         answer = sumArr[k - 1];
         return answer;

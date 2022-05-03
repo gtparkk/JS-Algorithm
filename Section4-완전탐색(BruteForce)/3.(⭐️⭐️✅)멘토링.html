@@ -30,23 +30,19 @@ M번의 수학성적이 주어지면 멘토와 멘티가 되는 짝을 만들 �
     <script>
       function solution(test) {
         let answer = 0;
-        let n = test[0].length;
-        for (let i = 1; i <= n; i++) {
-          for (let j = 1; j <= n; j++) {
-            let flag = 1;
-            for (let k = 0; k < test.length; k++) {
-              let p1 = 0,
-                p2 = 0;
-              p1 = test[k].indexOf(i);
-              p2 = test[k].indexOf(j);
-              if (p1 <= p2) {
-                flag = 0;
-                break;
-              }
+
+        for (let i = 0; i < test[0].length - 1; i++) {
+          for (let j = i + 1; j < test[0].length; j++) {
+            let flag = 0;
+
+            for (let k = 1; k < test.length; k++) {
+              if (test[k].indexOf(arr[0][i]) > test[k].indexOf(arr[0][j])) flag = 1;
             }
-            if (flag) answer++;
+
+            if (flag === 0) answer++;
           }
         }
+
         return answer;
       }
 
