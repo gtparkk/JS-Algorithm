@@ -13,8 +13,9 @@
 <!-- 
 풀이포인트 (복잡도 O(n)) (⭐️ -> 투포인터 풀이방법을 몰라서 표시함.)
 1. lt,rt를 0으로 초기화
-2. rt가 arr.length보다 작은동안 반복
-3. sum<숫자 인경우, sum+=arr[rt++]
+2. ⭐️for문 사용하지 않고 풀기
+3. rt가 arr.length보다 작은동안 반복
+4. sum<숫자 인경우, sum+=arr[rt++]
    sum===숫자 인경우, answer++ & sum-=arr[lt++]
    sum>숫자 인경우, sum-=arr[lt++] -->
 
@@ -26,17 +27,20 @@
   <body>
     <script>
       function solution(m, arr) {
-        let answer = 0,
-          lt = 0,
-          rt = 0,
-          sum = 0;
-        while (rt < arr.length) {
-          if (sum < m) sum += arr[rt++];
-          else if (sum === m) {
+        let answer = 0;
+        let lt = (rt = sum = 0);
+
+        while (rt <= arr.length) {
+          if (sum > m) {
+            sum -= arr[lt++];
+          } else if (sum === m) {
             answer++;
             sum -= arr[lt++];
-          } else sum -= arr[lt++];
+          } else {
+            sum += arr[rt++];
+          }
         }
+
         return answer;
       }
 

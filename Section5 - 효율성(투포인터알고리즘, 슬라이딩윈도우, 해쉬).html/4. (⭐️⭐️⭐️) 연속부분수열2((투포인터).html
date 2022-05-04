@@ -12,6 +12,7 @@
 
 <!-- 
   풀이포인트 (시간복잡도 O(n))
+  ⭐️ 합이 5가 되는이 아닌, 5이하인 수열을 구하는 문제이므로, 2번과 풀이방식은 다르다.
 1. ⭐️ 합이 m이하인 연속부분수열은 rt가 하나씩 늘어날수록 rt-lt+1개 만큼 늘어난다.
 2. rt값을 for문 외에서는 조작하지 않는다. 
 3. sum>m 인 동안, sum-=arr[lt++] -->
@@ -24,8 +25,8 @@
   <body>
     <script>
       function solution(m, arr) {
-        let answer = (lt = sum = 0);
-        for (let rt = 0; rt < arr.length; rt++) {
+        let answer = (lt = rt = sum = 0);
+        for (rt = 0; rt < arr.length; rt++) {
           sum += arr[rt];
           while (sum > m) sum -= arr[lt++];
           answer += rt - lt + 1;
