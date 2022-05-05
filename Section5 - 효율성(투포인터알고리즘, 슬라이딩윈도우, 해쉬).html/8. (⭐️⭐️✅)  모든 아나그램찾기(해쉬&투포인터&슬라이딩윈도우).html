@@ -22,24 +22,38 @@ S단어에 T문자열과 아나그램이 되는 부분문자열의 개수를 출
     <script>
       function solution(s, t) {
         let answer = (lt = 0);
-        let anaCh = new Map();
-        for (let x of t) {
-          let count = anaCh.has(x) ? anaCh.get(x) - 1 : -1;
-          anaCh.set(x, count);
-        }
+        let rt = t.length;
+        let map = new Map();
+
         for (let i = 0; i < t.length; i++) {
-          let count = anaCh.has(s[i]) ? anaCh.get(s[i]) + 1 : 1;
-          if (count === 0) anaCh.delete(s[i]);
+          let mCount = map.has(t[i]) ? map.get(t[i]) - 1 : -1;
+
+          map.set(t[i], mCount);
         }
-        if (anaCh.size === 0) answer++;
-        for (let rt = t.length; rt < s.length; rt++) {
-          anaCh.set(s[rt], anaCh.has(s[rt]) ? anaCh.get(s[rt]) + 1 : 1);
-          if (anaCh.get(s[rt]) === 0) anaCh.delete(s[rt]);
-          anaCh.set(s[lt], anaCh.has(s[lt]) ? anaCh.get(s[lt]) - 1 : -1);
-          if (anaCh.get(s[lt]) === 0) anaCh.delete(s[lt]);
-          if (anaCh.size === 0) answer++;
+
+        for (let i = 0; i < t.length; i++) {
+          let count = map.has(s[i]) ? map.get(s[i]) + 1 : 1;
+
+          if (count === 0) map.delete(s[i]);
+        }
+
+        if (map.size === 0) answer++;
+
+        while (rt < s.length) {
+          map.set(s[rt], map.has(s[rt]) ? map.get(s[rt]) + 1 : 1);
+
+          if (map.get(s[rt]) === 0) map.delete(s[rt]);
+
+          map.set(s[lt], map.has(s[lt]) ? map.get(s[lt]) - 1 : -1);
+
+          if (map.get(s[lt]) === 0) map.delete(s[lt]);
+
+          if (map.size === 0) answer++;
+
           lt++;
+          rt++;
         }
+
         return answer;
       }
       let a = "bacaAacba";

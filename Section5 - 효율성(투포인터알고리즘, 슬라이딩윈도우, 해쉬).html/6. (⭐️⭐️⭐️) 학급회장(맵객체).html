@@ -12,8 +12,8 @@
 <!-- ⭐️표시 이유 : 해시맵 자료구조 특성 복습용 -->
 <!-- 풀이포인트
 1. 해시맵 자료구조 특징이해
-2. 해시맵.get(), set() 메소드 활용 익숙해지기
-3. 해시맵 for문 사용 익숙해지기 -->
+2. 해시맵.get(), set() 메소드 활용 
+3. 해시맵 for문 사용 익히기 -->
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -23,16 +23,21 @@
     <script>
       function solution(s) {
         let answer;
-        let max = 0;
         let vote = new Map();
-        for (let x of s) {
-          let count = vote.get(x) === undefined ? 1 : vote.get(x) + 1;
-          vote.set(x, count);
-          if (count > max) {
-            max = count;
-            answer = x;
+        let max = 0;
+
+        for (let key of s) {
+          let count = vote.has(key) ? vote.get(key) + 1 : 1;
+          vote.set(key, count);
+        }
+
+        for (let [key, value] of vote) {
+          if (value > max) {
+            answer = key;
+            max = value;
           }
         }
+
         return answer;
       }
 
@@ -41,22 +46,3 @@
     </script>
   </body>
 </html>
-
-<!-- 답변풀이
-Map자료구조의 Method 및 for문에서 key,value 추출방법 활용 -->
-<!-- function solution(s) {
-  let answer;
-  let vote = new Map();
-  for (let x of s) {
-    let count = vote.has(x) ? vote.get(x) + 1 : 1;
-    vote.set(x, count);
-  }
-  let max = Number.MIN_SAFE_INTEGER;
-  for (let [key, value] of vote) {
-    if (value > max) {
-      max = value;
-      answer = key;
-    }
-  }
-  return answer;
-} -->

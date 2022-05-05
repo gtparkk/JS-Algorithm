@@ -23,14 +23,22 @@
   <body>
     <script>
       function solution(k, arr) {
-        let answer = 0;
-        let sum = 0;
-        for (let i = 0; i < k; i++) sum += arr[i];
+        let answer = 0,
+          lt = 0,
+          sum = 0,
+          rt = k;
+
+        for (let i = 0; i < k; i++) {
+          sum += arr[i];
+        }
+
         answer = sum;
-        for (let i = k; i < arr.length; i++) {
-          sum += arr[i] - arr[i - k];
+
+        while (rt < arr.length) {
+          sum += arr[rt++] - arr[lt++];
           answer = Math.max(answer, sum);
         }
+
         return answer;
       }
 
@@ -39,16 +47,3 @@
     </script>
   </body>
 </html>
-
-<!-- 기존 내 풀이 (시간복잠도 O(n^2))
-  function solution(k, arr) {
-  let answer = 0;
-  for (let lt = 0; lt < arr.length - 2; lt++) {
-    let sum = 0;
-    for (let i = 0; i < k; i++) {
-      sum += arr[lt + i];
-    }
-    answer = Math.max(answer, sum);
-  }
-  return answer;
-} -->
