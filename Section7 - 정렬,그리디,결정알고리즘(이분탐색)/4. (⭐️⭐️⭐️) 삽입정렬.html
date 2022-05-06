@@ -11,6 +11,7 @@
 <!-- 풀이포인트
   1. 1차 for문에서 i = 1~arr.length 순회, key=arr[i] 저장
   2. 2차 for문에서 j = i-1~0 순회, key<arr[j] 이면 arr[j]와 arr[j+1]교체 
+  3. 2차 for문 종료후, arr[j+1]=key대입
 -->
 <html>
   <head>
@@ -21,14 +22,21 @@
     <script>
       function solution(arr) {
         let answer = arr;
+
         for (let i = 1; i < arr.length; i++) {
-          let key = answer[i];
-          for (let j = i - 1; j >= 0; j--) {
-            if (key < answer[j])
-              [answer[j], answer[j + 1]] = [answer[j + 1], answer[j]];
-            else break;
+          const key = arr[i];
+          let j;
+
+          for (j = i - 1; j >= 0; j--) {
+            if (arr[j] > key) {
+              arr[j + 1] = arr[j];
+            } else {
+              break;
+            }
           }
+          answer[j + 1] = key;
         }
+
         return answer;
       }
 

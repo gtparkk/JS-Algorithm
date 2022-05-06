@@ -28,14 +28,27 @@ N과 K가 주어질 때 공주를 구하러 갈 왕자의 번호를 출력하는
   <body>
     <script>
       function solution(n, k) {
+        const queue = [];
         let answer;
-        let queue = [];
-        queue = Array.from({ length: 8 }, (v, i) => i + 1);
-        while (queue.length > 1) {
-          for (let i = 0; i < k - 1; i++) queue.push(queue.shift());
-          queue.shift();
+        let count = 0;
+
+        for (let i = 1; i <= n; i++) {
+          queue.push(i);
         }
-        answer = queue[0];
+
+        while (queue.length > 1) {
+          let number = queue.shift();
+
+          if (++count === k) {
+            count = 0;
+            continue;
+          }
+
+          queue.push(number);
+        }
+
+        answer = queue.shift();
+
         return answer;
       }
 
