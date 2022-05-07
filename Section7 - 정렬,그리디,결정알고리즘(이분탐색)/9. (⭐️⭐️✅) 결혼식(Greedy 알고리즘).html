@@ -26,22 +26,24 @@
   <body>
     <script>
       function solution(times) {
-        let answer = Number.MIN_SAFE_INTEGER;
-        let count = 0;
-        let timeLine = [];
-        for (let row of times) {
-          timeLine.push([row[0], 0]);
-          timeLine.push([row[1], 1]);
+        const timeLine = [];
+        let answer = 0,
+          sum = 0;
+
+        for (let i = 0; i < times.length; i++) {
+          timeLine.push([times[i][0], 0]);
+          timeLine.push([times[i][1], 1]);
         }
+
         timeLine.sort((a, b) => {
-          if (a[0] !== b[0]) return a[0] - b[0];
-          else return b[1] - a[1];
+          return a[0] === b[0] ? b[1] - a[1] : a[0] - b[0];
         });
-        for (let time of timeLine) {
-          if (time[1] === 0) count++;
-          else count--;
-          answer = Math.max(answer, count);
+
+        for (let i = 0; i < timeLine.length; i++) {
+          timeLine[i][1] === 0 ? sum++ : sum--;
+          answer = Math.max(answer, sum);
         }
+
         return answer;
       }
 

@@ -21,34 +21,8 @@
   </head>
   <body>
     <script>
-      function tapeCount(size, arr) {
-        let count = 1;
-        let sum = 0;
-
-        for (let x of arr) {
-          if (sum + x <= size) sum += x;
-          else {
-            count++;
-            sum = x;
-          }
-        }
-
-        return count;
-      }
       function solution(m, songs) {
         let answer;
-        let lt = Math.max(...songs);
-        let rt = songs.reduce((prev, curr) => prev + curr, 0);
-
-        while (lt <= rt) {
-          let mid = Math.floor((lt + rt) / 2);
-
-          if (tapeCount(mid, songs) <= m) {
-            answer = mid;
-            rt = mid - 1;
-          } else lt = mid + 1;
-        }
-
         return answer;
       }
 
