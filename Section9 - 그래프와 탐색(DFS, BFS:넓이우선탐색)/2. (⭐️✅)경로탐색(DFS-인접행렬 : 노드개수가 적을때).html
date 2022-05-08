@@ -29,9 +29,7 @@
     <script>
       function solution(n, arr) {
         let answer = 0;
-        const graph = Array.from({ length: n + 1 }, () =>
-          Array.from({ length: n + 1 }, () => 0)
-        );
+        const graph = Array.from({ length: n + 1 }, () => Array.from({ length: n + 1 }, () => 0));
         const check = Array.from({ length: n + 1 }, () => 0);
         check[1] = 1;
         for (let edge of arr) {

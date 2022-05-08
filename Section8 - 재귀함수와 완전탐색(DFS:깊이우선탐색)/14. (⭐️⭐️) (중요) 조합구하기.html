@@ -11,6 +11,7 @@
      for문이 해당 값 보다 큰값에 한해 동작하도록 함
   2. L===m일때 배열에 0이없는지 체크하지 않는이유는, L===m이 되기전 DFS가 재귀적으로 실행되지 못하고 탈락되었기 때문
   3. arr[L]=i+1을 하고 초기화 시켜주지 않는이유는, 다음 DFS에서 값을 덮어씌우기 때문이다. -->
+
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -21,6 +22,7 @@
       function solution(n, m) {
         let answer = [];
         let arr = Array.from({ length: m }, () => 0);
+
         function DFS(L, min) {
           if (L === m) {
             answer.push(arr.slice());
@@ -31,9 +33,12 @@
             }
           }
         }
+
         DFS(0, 1);
+
         return answer;
       }
+
       console.log(solution(4, 2));
     </script>
   </body>
