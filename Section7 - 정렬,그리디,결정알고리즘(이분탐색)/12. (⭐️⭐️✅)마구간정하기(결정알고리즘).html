@@ -26,14 +26,14 @@ C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말
   </head>
   <body>
     <script>
-      function count(arr, dist) {
-        let p = arr[0];
+      function getCount(distance, stable) {
         let count = 1;
+        let pos = stable[0];
 
-        for (let i = 1; i < arr.length; i++) {
-          if (arr[i] - p >= dist) {
+        for (let i = 1; i < stable.length; i++) {
+          if (pos + distance <= stable[i]) {
             count++;
-            p = arr[i];
+            pos = stable[i];
           }
         }
 
@@ -42,18 +42,20 @@ C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말
 
       function solution(c, stable) {
         let answer = 0;
-        let lt = 1,
-          rt = Math.max(...stable) - Math.min(...stable);
+        let lt = 1;
+        let rt = Math.max(...stable) - Math.min(...stable);
 
         stable.sort((a, b) => a - b);
 
         while (lt <= rt) {
           let mid = Math.floor((lt + rt) / 2);
 
-          if (count(stable, mid) >= c) {
-            answer = mid;
+          if (getCount(mid, stable) < c) {
+            rt = mid - 1;
+          } else {
             lt = mid + 1;
-          } else rt = mid - 1;
+            answer = Math.max(answer, mid);
+          }
         }
 
         return answer;
