@@ -22,14 +22,22 @@
     <script>
       function solution(n, m) {
         let answer = [];
-        function DFS(L, str) {
+        let check = [];
+
+        function DFS(L) {
           if (L === m) {
-            answer.push(str.trim());
+            answer.push(check.join(" "));
           } else {
-            for (let i = 1; i <= n; i++) DFS(L + 1, str + i + " ");
+            for (let i = 1; i <= n; i++) {
+              check.push(i);
+              DFS(L + 1);
+              check.pop();
+            }
           }
         }
-        DFS(0, "");
+
+        DFS(0);
+
         return answer;
       }
       console.log(solution(3, 2));
