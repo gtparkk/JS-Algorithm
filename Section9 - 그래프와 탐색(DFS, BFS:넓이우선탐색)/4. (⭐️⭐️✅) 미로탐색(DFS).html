@@ -28,24 +28,18 @@
   <body>
     <script>
       function solution(board) {
+        const dRow = [-1, 0, 1, 0];
+        const dCol = [0, 1, 0, -1];
         let answer = 0;
-        const dRow = [0, 1, 0, -1];
-        const dCol = [-1, 0, 1, 0];
 
         function DFS(row, col) {
           if (row === board.length - 1 && col === board.length - 1) {
             answer++;
           } else {
             for (let i = 0; i < 4; i++) {
-              const nRow = row + dRow[i];
-              const nCol = col + dCol[i];
-              if (
-                nRow >= 0 &&
-                nRow < board.length &&
-                nCol >= 0 &&
-                nCol < board.length &&
-                board[nRow][nCol] === 0
-              ) {
+              let nRow = row + dRow[i];
+              let nCol = col + dCol[i];
+              if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board.length && board[nRow][nCol] === 0) {
                 board[nRow][nCol] = 1;
                 DFS(nRow, nCol);
                 board[nRow][nCol] = 0;
@@ -56,6 +50,7 @@
 
         board[0][0] = 1;
         DFS(0, 0);
+
         return answer;
       }
 

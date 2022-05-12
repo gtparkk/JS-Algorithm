@@ -50,7 +50,7 @@ N은 가장 윗줄에 있는 숫자의 개수를 의 미하며 F는 가장 밑�
         }
 
         function DFS(L, sum) {
-          if (flag === 1) return;
+          if (sum > m || flag === 1) return;
 
           if (L === n) {
             if (sum === f) {

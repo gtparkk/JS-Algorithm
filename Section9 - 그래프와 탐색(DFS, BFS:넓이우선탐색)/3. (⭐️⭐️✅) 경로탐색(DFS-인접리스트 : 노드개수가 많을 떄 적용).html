@@ -28,12 +28,13 @@
     <script>
       function solution(n, arr) {
         let answer = 0;
-        const graph = Array.from({ length: n + 1 }, () => Array());
-        const check = Array.from({ length: n + 1 }, () => 0);
-        check[1] = 1;
-        for (let [row, col] of arr) {
-          graph[row].push(col);
+        let graph = Array.from({ length: n + 1 }, () => []);
+        let check = Array.from({ length: n + 1 }, () => 0);
+
+        for (let coordinate of arr) {
+          graph[coordinate[0]].push(coordinate[1]);
         }
+
         function DFS(v) {
           if (v === n) {
             answer++;
@@ -47,7 +48,10 @@
             }
           }
         }
+
+        check[1] = 1;
         DFS(1);
+
         return answer;
       }
 
