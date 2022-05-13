@@ -25,35 +25,31 @@
     <script>
       function solution(board) {
         let answer = 0;
-        const dRow = [-1, -1, 0, 1, 1, 1, 0, -1];
-        const dCol = [0, 1, 1, 1, 0, -1, -1, -1];
+
+        function DFS(row, col) {
+          const dRow = [-1, -1, 0, 1, 1, 1, 0, -1];
+          const dCol = [0, 1, 1, 1, 0, -1, -1, -1];
+
+          for (let i = 0; i < 8; i++) {
+            const nRow = row + dRow[i];
+            const nCol = col + dCol[i];
+
+            if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board.length && board[nRow][nCol] === 1) {
+              board[nRow][nCol] = 0;
+              DFS(nRow, nCol);
+            }
+          }
+        }
+
         for (let i = 0; i < board.length; i++) {
           for (let j = 0; j < board.length; j++) {
             if (board[i][j] === 1) {
               answer++;
               DFS(i, j);
-              const boardCapture = board.map((row) => row.slice());
-              console.log(answer, boardCapture);
             }
           }
         }
-        function DFS(row, col) {
-          board[row][col] = 0;
-          for (let i = 0; i < 8; i++) {
-            const nRow = row + dRow[i];
-            const nCol = col + dCol[i];
-            if (
-              nRow >= 0 &&
-              nRow < board.length &&
-              nCol >= 0 &&
-              nCol < board.length &&
-              board[nRow][nCol] === 1
-            ) {
-              DFS(nRow, nCol);
-            }
-          }
-        }
-        DFS(0, 0);
+
         return answer;
       }
 

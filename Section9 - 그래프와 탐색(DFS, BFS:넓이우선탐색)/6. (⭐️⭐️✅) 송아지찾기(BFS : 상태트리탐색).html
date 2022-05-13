@@ -25,25 +25,27 @@
   <body>
     <script>
       function solution(s, e) {
-        let check = Array.from({ length: 10001 }, () => 0);
-        let L = 0;
-        let queue = [s];
+        const queue = [s];
+        const check = Array.from({ length: 10001 }, () => 0);
+        let jumpCount = 0;
 
-        while (queue.length != 0) {
-          const n = queue.length;
+        while (queue.length > 0) {
+          let len = queue.length;
 
-          for (let i = 0; i < n; i++) {
-            const v = queue.shift();
+          for (let i = 0; i < len; i++) {
+            let value = queue.shift();
 
-            for (let nv of [v + 1, v - 1, v + 5]) {
-              if (nv === e) return L + 1;
+            for (let nv of [value + 1, value - 1, value + 5]) {
+              if (nv === e) return jumpCount + 1;
+
               if (check[nv] === 0) {
-                queue.push(nv);
                 check[nv] = 1;
+                queue.push(nv);
               }
             }
           }
-          L++;
+
+          jumpCount++;
         }
       }
       console.log(solution(5, 14));

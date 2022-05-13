@@ -8,7 +8,7 @@
 <!-- 풀이포인트
   1. 트리의 레벨순으로 탐색한다.
   2. Queue의 shift를 활용해서 가장먼저 추가된 숫자부터 answer에 추가한다.
-  3. 재귀대신 while문(queue.length!=0)을 사용해서 풀이한다.-->
+  3. 재귀대신 while문(queue.length!==0)을 사용해서 풀이한다.-->
 
 <html>
   <head>
@@ -18,17 +18,20 @@
   <body>
     <script>
       function solution() {
-        let answer = "";
-        let queue = [];
-        queue.push(1);
-        while (queue.length != 0) {
-          let v = queue.shift();
-          answer += v + " ";
-          for (let nv of [2 * v, 2 * v + 1]) {
-            if (nv <= 7) queue.push(nv);
+        const queue = [1];
+        let answer = [];
+
+        while (queue.length > 0) {
+          let value = queue.shift();
+
+          answer.push(value);
+
+          for (let nv of [2 * value, 2 * value + 1]) {
+            if (nv < 8) queue.push(nv);
           }
         }
-        return answer;
+
+        return answer.join(" ");
       }
 
       console.log(solution());

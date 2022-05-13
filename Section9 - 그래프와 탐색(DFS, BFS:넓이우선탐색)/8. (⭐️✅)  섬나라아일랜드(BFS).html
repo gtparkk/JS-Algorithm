@@ -41,13 +41,8 @@
                 for (let i = 0; i < 8; i++) {
                   const nRow = row + dRow[i];
                   const nCol = col + dCol[i];
-                  if (
-                    nRow >= 0 &&
-                    nRow < board.length &&
-                    nCol >= 0 &&
-                    nCol < board.length &&
-                    board[nRow][nCol] === 1
-                  ) {
+                  if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board.length && board[nRow][nCol] === 1) {
+                    board[nRow][nCol] = 0;
                     queue.push([nRow, nCol]);
                   }
                 }
