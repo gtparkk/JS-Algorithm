@@ -24,29 +24,36 @@
   <body>
     <script>
       function solution(board) {
-        let answer = 0;
         const queue = [];
         const dRow = [-1, -1, 0, 1, 1, 1, 0, -1];
         const dCol = [0, 1, 1, 1, 0, -1, -1, -1];
+        let answer = 0;
+
         for (let i = 0; i < board.length; i++) {
           for (let j = 0; j < board.length; j++) {
             if (board[i][j] === 1) {
+              board[i][j] = 0;
               queue.push([i, j]);
               answer++;
-              while (queue.length != 0) {
+
+              while (queue.length > 0) {
                 const arrRC = queue.shift();
                 let row, col;
+
                 [row, col] = [arrRC[0], arrRC[1]];
                 board[row][col] = 0;
+
                 for (let i = 0; i < 8; i++) {
                   const nRow = row + dRow[i];
                   const nCol = col + dCol[i];
+
                   if (nRow >= 0 && nRow < board.length && nCol >= 0 && nCol < board.length && board[nRow][nCol] === 1) {
                     board[nRow][nCol] = 0;
                     queue.push([nRow, nCol]);
                   }
                 }
               }
+
               console.log(
                 answer,
                 board.map((row) => row.slice())
