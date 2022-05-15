@@ -31,18 +31,17 @@
   <body>
     <script>
       function solution(m, coin) {
-        const dy = Array(m + 1).fill(100);
         let answer = 0;
-
-        dy[0] = 0;
+        const coinCount = Array.from({ length: m + 1 }, () => 10000);
+        coinCount[0] = 0;
 
         for (let i = 0; i < coin.length; i++) {
           for (let j = coin[i]; j <= m; j++) {
-            dy[j] = Math.min(dy[j], dy[j - coin[i]] + 1);
+            coinCount[j] = Math.min(coinCount[j], coinCount[j - coin[i]] + 1);
           }
         }
 
-        answer = dy[m];
+        answer = coinCount[m];
 
         return answer;
       }

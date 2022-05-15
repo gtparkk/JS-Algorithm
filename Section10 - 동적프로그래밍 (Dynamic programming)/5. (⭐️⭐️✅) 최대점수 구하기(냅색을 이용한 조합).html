@@ -27,16 +27,17 @@
   <body>
     <script>
       function solution(m, arr) {
+        const score = Array.from({ length: m + 1 }, () => 0);
         let answer = 0;
-        const dy = Array(m + 1).fill(0);
+
         for (let i = 0; i < arr.length; i++) {
-          const score = arr[i][0];
-          const time = arr[i][1];
-          for (let j = m; j >= time; j--) {
-            dy[j] = Math.max(dy[j], dy[j - time] + score);
+          for (let j = m; j - arr[i][1] >= 0; j--) {
+            score[j] = Math.max(score[j], score[j - arr[i][1]] + arr[i][0]);
           }
         }
-        answer = dy[m];
+
+        answer = score[m];
+
         return answer;
       }
 
