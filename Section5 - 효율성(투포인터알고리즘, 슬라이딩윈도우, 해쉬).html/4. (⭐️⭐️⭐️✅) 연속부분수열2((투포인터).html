@@ -26,11 +26,17 @@
     <script>
       function solution(m, arr) {
         let answer = (lt = rt = sum = 0);
-        for (rt = 0; rt < arr.length; rt++) {
+
+        for (let rt = 0; rt < arr.length; rt++) {
           sum += arr[rt];
-          while (sum > m) sum -= arr[lt++];
+
+          while (sum > m) {
+            sum -= arr[lt++];
+          }
+
           answer += rt - lt + 1;
         }
+
         return answer;
       }
 

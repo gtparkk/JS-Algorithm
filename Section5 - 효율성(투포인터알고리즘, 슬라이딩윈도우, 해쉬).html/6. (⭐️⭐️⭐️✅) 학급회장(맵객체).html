@@ -22,19 +22,18 @@
   <body>
     <script>
       function solution(s) {
+        const vote = new Map();
         let answer;
-        let vote = new Map();
         let max = 0;
 
-        for (let key of s) {
-          let count = vote.has(key) ? vote.get(key) + 1 : 1;
-          vote.set(key, count);
+        for (let x of s) {
+          vote.set(x, vote.has(x) ? vote.get(x) + 1 : 1);
         }
 
-        for (let [key, value] of vote) {
-          if (value > max) {
-            answer = key;
-            max = value;
+        for (let [k, v] of vote) {
+          if (v > max) {
+            answer = k;
+            max = v;
           }
         }
 
