@@ -20,9 +20,9 @@
   <body>
     <script>
       function solution(n, m) {
-        let answer = [];
-        let temp = [];
-        let check = Array.from({ length: n + 1 }, () => 0);
+        const answer = [];
+        const temp = [];
+        const check = Array.from({ length: n + 1 }, () => 0);
 
         function DFS(L, min) {
           if (L === m) {
