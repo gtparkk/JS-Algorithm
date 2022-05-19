@@ -17,24 +17,23 @@
   </head>
   <body>
     <script>
-      function solution() {
+      function solution(n) {
+        const answer = [];
         const queue = [1];
-        let answer = [];
 
         while (queue.length > 0) {
-          let value = queue.shift();
+          let shiftNum = queue.shift();
+          answer.push(shiftNum);
 
-          answer.push(value);
-
-          for (let nv of [2 * value, 2 * value + 1]) {
-            if (nv < 8) queue.push(nv);
+          for (let x of [2 * shiftNum, 2 * shiftNum + 1]) {
+            if (x <= n) queue.push(x);
           }
         }
 
         return answer.join(" ");
       }
 
-      console.log(solution());
+      console.log(solution(7));
     </script>
   </body>
 </html>

@@ -33,36 +33,34 @@ N은 가장 윗줄에 있는 숫자의 개수를 의 미하며 F는 가장 밑�
   <body>
     <script>
       function solution(n, f) {
+        const temp = [];
+        const memoizedCombination = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0));
+        const check = Array.from({ length: n + 1 }, () => 0);
         let answer = [];
-        let temp = [];
-        let memoize = Array.from({ length: n + 1 }, () => Array(n + 1).fill(0));
-        let check = Array.from({ length: n + 1 }, () => 0);
         let flag = 0;
 
-        function getNCR(n, r) {
-          if (memoize[n][r] !== 0) return memoize[n][r];
+        function getCombination(n, r) {
+          if (memoizedCombination[n][r] !== 0) return memoizedCombination[n][r];
 
           if (n === r || r === 0) return 1;
 
-          memoize[n][r] = getNCR(n - 1, r - 1) + getNCR(n - 1, r);
-
-          return memoize[n][r];
+          return (memoizedCombination[n][r] = getCombination(n - 1, r - 1) + getCombination(n - 1, r));
         }
 
         function DFS(L, sum) {
-          if (sum > m || flag === 1) return;
+          if (sum > f || flag === 1) return;
 
           if (L === n) {
             if (sum === f) {
-              flag = 1;
               answer = temp.slice();
+              flag = 1;
             }
           } else {
             for (let i = 1; i <= n; i++) {
               if (check[i] === 0) {
                 check[i] = 1;
                 temp.push(i);
-                DFS(L + 1, sum + i * getNCR(n - 1, L));
+                DFS(L + 1, sum + i * getCombination(n - 1, L));
                 check[i] = 0;
                 temp.pop();
               }
