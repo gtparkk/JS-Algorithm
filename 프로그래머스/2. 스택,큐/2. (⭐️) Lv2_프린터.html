@@ -34,31 +34,27 @@ priorities	location	return
   <body>
     <script>
       function solution(priorities, location) {
-        let answer = 0;
-        let position = location;
+        let answer = 1;
+        const newPrior = priorities.map((v, i) => [v, i]);
+        const printArray = [];
 
-        while (position > 0) {
-          if (priorities[0] === Math.max(...priorities)) {
-            priorities.shift();
+        while (newPrior.length > 0) {
+          let temp = newPrior.shift();
+
+          if (newPrior.every((x) => temp[0] >= x[0])) {
+            if (temp[1] === location) return answer;
+
+            printArray.push(temp);
             answer++;
           } else {
-            priorities.push(priorities.shift());
+            newPrior.push(temp);
           }
-
-          poisition--;
         }
 
-        if (priorities[0] === Math.max(...priorities)) {
-          return answer;
-        } else {
-          priorities.push(priorities.shift());
-          position === priorities.length;
-        }
-
-        if (Math.max(...priorities) !== priorities[position]) return answer;
+        return answer;
       }
 
-      console.log(solution([2, 1, 3, 2], 2));
+      console.log(solution([1, 1, 9, 1, 1, 1], 0));
     </script>
   </body>
 </html>
