@@ -29,9 +29,9 @@ number	k	return
         let deleted = 0;
         let pos = 0;
 
-        while (deleted < k) {
+        while (deleted < k && pos < number.length) {
           for (let i = 0; i < stack.length; i++) {
-            if (stack[i] < number[pos] && number.length - k - i >= number.length - pos - 1) {
+            if (stack[i] < number[pos] && number.length - k - i <= number.length - pos) {
               stack = stack.slice(0, i);
               deleted++;
               break;
