@@ -1,0 +1,86 @@
+<!-- 링크 : https://programmers.co.kr/learn/courses/30/lessons/42885?language=javascript
+문제 설명
+무인도에 갇힌 사람들을 구명보트를 이용하여 구출하려고 합니다. 구명보트는 작아서 한 번에 최대 2명씩 밖에 탈 수 없고, 무게 제한도 있습니다.
+예를 들어, 사람들의 몸무게가 [70kg, 50kg, 80kg, 50kg]이고 구명보트의 무게 제한이 100kg이라면 2번째 사람과 4번째 사람은 같이 탈 수 있지만,
+1번째 사람과 3번째 사람의 무게의 합은 150kg이므로 구명보트의 무게 제한을 초과하여 같이 탈 수 없습니다.
+구명보트를 최대한 적게 사용하여 모든 사람을 구출하려고 합니다.
+사람들의 몸무게를 담은 배열 people과 구명보트의 무게 제한 limit가 매개변수로 주어질 때,
+모든 사람을 구출하기 위해 필요한 구명보트 개수의 최솟값을 return 하도록 solution 함수를 작성해주세요.
+
+제한사항
+무인도에 갇힌 사람은 1명 이상 50,000명 이하입니다.
+각 사람의 몸무게는 40kg 이상 240kg 이하입니다.
+구명보트의 무게 제한은 40kg 이상 240kg 이하입니다.
+구명보트의 무게 제한은 항상 사람들의 몸무게 중 최댓값보다 크게 주어지므로 사람들을 구출할 수 없는 경우는 없습니다.
+
+입출력 예
+people	limit	return
+[70, 50, 80, 50]	100	3
+[70, 80, 50]	100	3 
+
+풀이포인트
+1. 정렬후 이중for문 순회하는 대신, lt와 rt를 활용해 sorted[rt]가 limit-sorted[lt]보다 작은경우 count++
+2. lt가 rt와 같거나 커진경우 sorted배열길이-count 반환 (한명씩 태우는경우가 sorted배열길이이고, 그중 count는 2명이 같이 탄 경우이기 때문..)>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(people, limit) {
+        const sorted = people.sort((a, b) => a - b);
+        let answer = 0,
+          lt = 0,
+          rt = people.length - 1,
+          count = 0;
+
+        while (lt < rt) {
+          if (sorted[rt] > limit - sorted[lt]) {
+            rt--;
+          } else {
+            lt++;
+            rt--;
+            count++;
+          }
+        }
+
+        answer = people.length - count;
+
+        return answer;
+      }
+
+      console.log(solution([70, 50, 80, 50], 100));
+    </script>
+  </body>
+</html>
+
+<!-- 효율성테스트 실패한 코드 - O(n^2)
+  function solution(people, limit) {
+    const sortedPeople = people.sort((a, b) => a - b);
+    const check = [];
+    let answer = 0;
+
+    for (let i = 0; i <= sortedPeople.length; i++) {
+        if (check.length === sortedPeople.length) {
+            answer = i;
+            break;
+        }
+
+        let person1 = sortedPeople[i];
+
+        check.push(i);
+
+        for (let j = sortedPeople.length - 1; j > i; j--) {
+            let person2 = sortedPeople[j];
+
+            if (person2 <= limit - person1 && check.indexOf(j) === -1) {
+                check.push(j);
+                break;
+            }
+        }
+    }
+
+    return answer;
+}
+-->
