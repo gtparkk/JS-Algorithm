@@ -23,7 +23,15 @@ name의 길이는 1 이상 20 이하입니다.
 입출력 예
 name	return
 "JEROEN"	56
-"JAN"	23 -->
+"JAN"	23 
+
+풀이포인트
+1. 위아래 이동최소값은 charCoddAt을 사용해 아스키코드 A('65')를 뺀값만큼 이동. 이때 거꾸로이동하는경우와 정방향으로 이동하는경우중 작은값만큼 이동
+2. 왼쪽오른쪽 이동 최소값은 우선 한방향으로 이동하는경우를 입력해놓고, A를 만났을때, 
+   (1) A를 만난위치에서 정방향으로 진행하다가 왼쪽으로 다시 돌아가고 + 오른쪽 끝에서 왼쪽으로 진행하는경우
+   (2) A를 만난위치에서 역순으로 진행하다가 오른쪽으로 다시 돌아가고 + 왼쪽끝에서 오른쪽으로 진행하는경우
+   (3) 기존 minLeftRight
+   중 작은값을 minLeftRight에 대입 -->
 
 <html>
   <head>
@@ -45,6 +53,7 @@ name	return
 
         for (let i = 1; i < name.length; i++) {
           let j;
+
           if (name[i] === "A") {
             for (j = i + 1; j < name.length; j++) {
               if (name[j] !== "A") break;
@@ -53,8 +62,7 @@ name	return
             const left = i - 1;
             const right = name.length - j;
 
-            minLeftRight = Math.min(minLeftRight, left > right ? left + 2 * right : 2 * left + right);
-
+            minLeftRight = Math.min(minLeftRight, 2 * left + right, left + 2 * right);
             i = j;
           }
         }
@@ -62,7 +70,7 @@ name	return
         return upDown + minLeftRight;
       }
 
-      console.log(solution("JEROEN"));
+      console.log(solution("JAN"));
     </script>
   </body>
 </html>
