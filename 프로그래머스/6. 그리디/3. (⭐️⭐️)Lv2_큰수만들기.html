@@ -16,7 +16,13 @@ k는 1 이상 number의 자릿수 미만인 자연수입니다.
 number	k	return
 "1924"	2	"94"
 "1231234"	3	"3234"
-"4177252841"	4	"775841" -->
+"4177252841"	4	"775841"
+
+풀이포인트
+1. 결과값을 저장하는 stack을 만든다.
+2. for문으로 number배열을 순회하고, while문을 통해 삭제된개수가 k개 미만이고, number[i]가 stack 끝에있는 값보다 큰경우 stack끝에있는 값 제거 및 count++;
+3. 스택의 길이가 number배열길이-k 보다 작은경우에만 스택에 number[i] 추가.
+-->
 
 <html>
   <head>
@@ -26,33 +32,25 @@ number	k	return
   <body>
     <script>
       function solution(number, k) {
-        let stack = [];
-        let answer = "";
+        let stack = [number[0]];
         let deleted = 0;
-        let pos = 0;
 
-        while (deleted < k && pos < number.length) {
-          for (let i = 0; i < stack.length; i++) {
-            if (stack[i] < number[pos] && number.length - k - i <= number.length - pos) {
-              stack = stack.slice(0, i);
-              deleted++;
-              break;
-            }
+        for (let i = 1; i < number.length; i++) {
+          while (deleted < k && number[i] > stack[stack.length - 1]) {
+            stack.pop();
+            deleted++;
           }
 
-          stack.push(number[pos++]);
+          if (stack.length < number.length - k) stack.push(number[i]);
         }
 
-        while (pos < number.length) {
-          stack.push(number[pos++]);
-        }
-
-        answer = stack.join("");
-
-        return answer;
+        return stack.join("");
       }
 
-      console.log(solution("1231234", 3));
+      //console.log(solution("654321", 1)); //65432
+      //console.log(solution("1924", 2)); //94
+      //console.log(solution("1231234", 3)); //3234
+      console.log(solution("4177252841", 4)); //775841
     </script>
   </body>
 </html>
