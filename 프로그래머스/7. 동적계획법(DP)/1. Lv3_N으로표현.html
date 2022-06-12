@@ -1,0 +1,105 @@
+<!-- 링크 : https://programmers.co.kr/learn/courses/30/lessons/42895?language=javascript
+문제 설명
+아래와 같이 5와 사칙연산만으로 12를 표현할 수 있습니다.
+
+12 = 5 + 5 + (5 / 5) + (5 / 5)
+12 = 55 / 5 + 5 / 5
+12 = (55 + 5) / 5
+
+5를 사용한 횟수는 각각 6,5,4 입니다. 그리고 이중 가장 작은 경우는 4입니다.
+이처럼 숫자 N과 number가 주어질 때, N과 사칙연산만 사용해서 표현 할 수 있는 방법 중 N 사용횟수의 최솟값을 return 하도록 solution 함수를 작성하세요.
+
+제한사항
+N은 1 이상 9 이하입니다.
+number는 1 이상 32,000 이하입니다.
+수식에는 괄호와 사칙연산만 가능하며 나누기 연산에서 나머지는 무시합니다.
+최솟값이 8보다 크면 -1을 return 합니다.
+
+입출력 예
+N	number	return
+5	12	    4
+2	11	    3
+
+입출력 예 설명
+예제 #1
+문제에 나온 예와 같습니다.
+
+예제 #2
+11 = 22 / 2와 같이 2를 3번만 사용하여 표현할 수 있습니다.
+
+풀이포인트
+1. 예를들어 dy[4]는 dy[1]+dy[3],dy[1]-dy[3],dy[1]*dy[3],dy[1]/dy[3],dy[2]+dy[2]..... 와 같은방식으로 계산된다.
+2. dy배열에 Set자료구조를 둬서 반복을 방지하고, (N을 i번 사용해 만든 숫자),+,-,*,/ 결과를 기록한다.
+3. dy배열의 값은 1~8까지만 구해보고, 중간에 number 발견시 i리턴, 끝까지 발견못하면 -1리턴
+
+
+아래는 프로그래머스 모범답안이며, 내 풀이과정과 차이점은 Set자료구조의 사용유무
+-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(N, number) {
+        const dy = Array.from({ length: 9 }, () => new Set());
+
+        for (let i = 1; i < 9; i++) {
+          dy[i].add("1".repeat(i) * N);
+
+          for (let j = 1; j < i; j++) {
+            for (let x of dy[j]) {
+              for (let y of dy[i - j]) {
+                dy[i].add(x + y);
+                dy[i].add(x - y);
+                dy[i].add(x * y);
+                dy[i].add(x / y);
+              }
+            }
+          }
+
+          if (dy[i].has(number)) return i;
+        }
+
+        return -1;
+      }
+
+      console.log(solution(4, 31)); //5
+    </script>
+  </body>
+</html>
+<!-- 내 풀이 (일반 배열만을 사용해 풀이함)
+      function solution(N, number) {
+        const dy = Array.from({ length: 10 }, () => []);
+
+        dy[0].push(0);
+
+        for (let step = 1; step < 9; step++) {
+          dy[step].push(dy[step - 1][0] * 10 + N);
+
+          for (let i = 1; i < step; i++) {
+            for (let j = 0; j < dy[i].length; j++) {
+              for (let k = 0; k < dy[step - i].length; k++) {
+                let add = dy[i][j] + dy[step - i][k];
+                let sub = dy[i][j] - dy[step - i][k];
+                let mul = dy[i][j] * dy[step - i][k];
+                let div = dy[i][j] / dy[step - i][k];
+
+                if (dy[step].indexOf(add) === -1) dy[step].push(add);
+
+                if (dy[step].indexOf(sub) === -1) dy[step].push(sub);
+
+                if (dy[step].indexOf(mul) === -1) dy[step].push(mul);
+
+                if (dy[step].indexOf(div) === -1) dy[step].push(div);
+              }
+            }
+          }
+
+          if (dy[step].indexOf(number) !== -1) return step;
+        }
+
+        return -1;
+      }
+-->
