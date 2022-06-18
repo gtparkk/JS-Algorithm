@@ -67,7 +67,7 @@ jobs	return
         let i = 0;
 
         while (i < jobs.length || pq.length !== 0) {
-          if (jobs.length > i && time >= jobs[i][0]) {
+          if (i < jobs.length && time >= jobs[i][0]) {
             pq.push(jobs[i++]);
             pq.sort((a, b) => a[1] - b[1]);
             continue;
