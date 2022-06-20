@@ -22,7 +22,6 @@ operations	                return
 입출력 예 설명
 16을 삽입 후 최댓값을 삭제합니다. 비어있으므로 [0,0]을 반환합니다.
 7,5,-5를 삽입 후 최솟값을 삭제합니다. 최대값 7, 최소값 5를 반환합니다. -->
-
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -31,29 +30,24 @@ operations	                return
   <body>
     <script>
       function solution(operations) {
-        const pq = [];
+        const answer = [];
 
-        operations.forEach((operation) => {
-          let [command, num] = operation.split(" "); //I. 16
-          num = parseInt(num);
-          switch (command) {
-            case "I":
-              pq.unshift(num);
-              break;
-            case "D":
-              if (pq.length == 0) break;
-              if (num == 1) pq.sort((a, b) => b - a);
-              else if (num == -1) pq.sort((a, b) => a - b);
-              pq.shift();
-              break;
+        operations.forEach((op) => {
+          let [command, num] = op.split(" ");
+          num = Number(num);
+
+          if (command === "I") answer.push(num);
+
+          if (command === "D" && answer.length !== 0) {
+            if (num === 1) answer.sort((a, b) => b - a);
+
+            if (num === -1) answer.sort((a, b) => a - b);
+
+            answer.shift();
           }
         });
 
-        if (!pq.length) return [0, 0];
-
-        pq.sort((a, b) => b - a);
-
-        return [pq[0], pq[pq.length - 1]];
+        return answer.length === 0 ? [0, 0] : [Math.max(...answer), Math.min(...answer)];
       }
 
       console.log(solution(["I 7", "I 5", "I -5", "D -1"]));
