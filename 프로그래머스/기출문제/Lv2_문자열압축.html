@@ -65,34 +65,42 @@ s	result
       function solution(s) {
         let answer = s.length;
 
-        for (let i = 1; i <= parseInt(s.length / 2); i++) {
+        for (let cutLength = 1; cutLength <= Math.floor(s.length / 2); cutLength++) {
           let str = "";
           let cnt = 1;
-          let tempStr = s.substr(0, i);
-          let idx = 0;
+          let prevStr = s.substr(0, cutLength);
 
-          for (idx = i; idx <= s.length; idx += i) {
-            let nextStr = s.substr(idx, i);
+          for (let i = cutLength; i < s.length; i += cutLength) {
+            let currStr = s.substr(i, cutLength);
 
-            if (tempStr === nextStr) {
-              cnt += 1;
+            if (prevStr === currStr) {
+              cnt++;
             } else {
-              if (cnt === 1) str = str + tempStr;
-              else str = str + cnt + tempStr;
+              if (cnt === 1) {
+                str += prevStr;
+              } else {
+                str += cnt + prevStr;
+              }
 
               cnt = 1;
-              tempStr = nextStr;
+              prevStr = currStr;
             }
           }
-          if (cnt === 1) str = str + tempStr;
-          else str = str + cnt + tempStr;
+
+          if (cnt === 1) {
+            str += prevStr;
+          } else {
+            str += cnt + prevStr;
+          }
+
           answer = Math.min(answer, str.length);
+          console.log(cutLength, str);
         }
 
         return answer;
       }
 
-      console.log(solution("abcabcabcabcdededededede"));
+      console.log(solution("ababcdcdababcdcd"));
     </script>
   </body>
 </html>
