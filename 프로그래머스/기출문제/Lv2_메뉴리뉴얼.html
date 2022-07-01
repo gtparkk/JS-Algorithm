@@ -55,45 +55,40 @@ orders	                                            course    result
   <body>
     <script>
       function solution(orders, course) {
-        const answer = course.reduce((answer, num) => {
-          let candidate = {};
+        let answer = [];
 
-          for (let i = 0; i < orders.length; i++) {
-            if (orders[i] < num) continue;
+        course.forEach((num) => {
+          const menus = new Map();
+          orders.forEach((order) => {
+            const combinations = getCombination(order.split("").sort(), num);
+            combinations.forEach((combs) => {
+              const comb = combs.join("");
+              menus.set(comb, menus.has(comb) ? menus.get(comb) + 1 : 1);
+            });
+          });
 
-            combination(orders[i].split("").sort(), "", orders[i].length, num, 0);
-          }
+          let populate = Math.max(...menus.values());
 
-          let menu = [];
-          let mostOrdered = 0;
-          for (let key in candidate) {
-            let value = candidate[key];
-            if (value > 1) {
-              if (value > mostOrdered) {
-                mostOrdered = value;
-                menu = [key];
-              } else if (value === mostOrdered) {
-                menu.push(key);
-              }
-            }
-          }
-
-          mostOrdered = 0;
-          return [...answer, ...menu];
-        }, []);
-
-        function combination(arr, target, n, r, count) {
-          if (r === 0) {
-            let cnt = candidate[target] || 0;
-            candidate[target] = cnt + 1;
-          } else if (n === 0 || n < r) return;
-          else {
-            combination(arr, target + arr[count], n - 1, r - 1, count + 1);
-            combination(arr, target, n - 1, r, count + 1);
-          }
-        }
+          menus.forEach((count, menu, map) => {
+            if (count === populate && count >= 2) answer.push(menu);
+          });
+        });
 
         return answer.sort();
+      }
+
+      function getCombination(arr, num) {
+        const results = [];
+        if (num === 1) return arr.map((v) => [v]);
+
+        arr.forEach((fixed, index, origin) => {
+          const rest = origin.slice(index + 1);
+          const combinations = getCombination(rest, num - 1);
+          const attached = combinations.map((v) => [fixed, ...v]);
+          results.push(...attached);
+        });
+
+        return results;
       }
 
       console.log(solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"], [2, 3, 4]));
