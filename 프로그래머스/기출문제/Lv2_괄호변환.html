@@ -70,56 +70,30 @@ u의 앞뒤 문자를 제거하고, 나머지 문자의 괄호 방향을 뒤집�
   </head>
   <body>
     <script>
-      function solution(p) {
-        let answer = "";
-        let open = 0;
-        let close = 0;
-
-        if (!p) return "";
-
-        for (let i = 0; i < p.length; i++) {
-          if (p[i] === "(") {
-            open++;
-          } else {
-            close++;
-          }
-
-          if (open === close) {
-            if (check(p.slice(0, i + 1))) {
-              answer = p.slice(0, i + 1) + solution(p.slice(i + 1));
-
-              return answer;
-            } else {
-              answer = "(" + solution(p.slice(i + 1)) + ")";
-
-              for (let j = 1; j < i; j++) {
-                if (p[j] === "(") {
-                  answer = answer + ")";
-                } else {
-                  answer = answer + "(";
-                }
-              }
-
-              return answer;
-            }
-          }
-        }
+      function reverse(str) {
+        return str
+          .slice(1, str.length - 1)
+          .split("")
+          .map((c) => (c === "(" ? ")" : "("))
+          .join("");
       }
 
-      // 올바른 괄호 문자열인지 판단하는 함수
-      function check(p) {
-        const stack = [];
+      function solution(p) {
+        if (p.length < 1) return "";
 
-        for (let i = 0; i < p.length; i++) {
-          if (p[i] === "(") {
-            stack.push("(");
-          } else {
-            if (stack.length === 0) return false;
-            stack.pop();
-          }
-        }
+        let balance = 0;
+        let pivot = 0;
 
-        return true;
+        do {
+          balance += p[pivot++] === "(" ? 1 : -1;
+        } while (balance !== 0);
+
+        const u = p.slice(0, pivot);
+        const v = solution(p.slice(pivot, p.length));
+
+        if (u[0] === "(" && u[u.length - 1] == ")") return u + v;
+
+        return "(" + v + ")" + reverse(u);
       }
 
       console.log(solution(")("));
