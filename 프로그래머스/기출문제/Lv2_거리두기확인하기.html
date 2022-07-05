@@ -1,0 +1,76 @@
+<!-- 링크 : https://school.programmers.co.kr/learn/courses/30/lessons/81302 
+문제생략 (이미지) -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(places) {
+        let answer = Array(places.length).fill(0);
+
+        places = places.map((p) => p.map((i) => i.split("")));
+
+        const dx = [-1, 0, 1, 0];
+        const dy = [0, 1, 0, -1];
+
+        for (let i = 0; i < places.length; i++) {
+          DFS(i);
+        }
+
+        function DFS(lc) {
+          let place = places[lc];
+
+          answer[lc] = 1;
+
+          for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+              if (place[i][j] !== "P") continue;
+
+              for (let k = 0; k < 4; k++) {
+                let nx = i + dx[k];
+                let ny = j + dy[k];
+
+                if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5) {
+                  if (place[nx][ny] === "P") {
+                    answer[lc] = 0;
+
+                    return;
+                  } else if (place[nx][ny] === "O") {
+                    for (let k2 = 0; k2 < 4; k2++) {
+                      let nx2 = nx + dx[k2];
+                      let ny2 = ny + dy[k2];
+
+                      if (nx2 === i && ny2 === j) continue;
+
+                      if (nx2 >= 0 && nx2 < 5 && ny2 >= 0 && ny2 < 5) {
+                        if (place[nx2][ny2] === "P") {
+                          answer[lc] = 0;
+
+                          return;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        return answer;
+      }
+
+      console.log(
+        solution([
+          ["POOOP", "OXXOX", "OPXPX", "OOXOX", "POXXP"],
+          ["POOPX", "OXPXP", "PXXXO", "OXXXO", "OOOPP"],
+          ["PXOPX", "OXOXP", "OXPOX", "OXXOP", "PXPOX"],
+          ["OOOXX", "XOOOX", "OOOXX", "OXOOX", "OOOOO"],
+          ["PXPXP", "XPXPX", "PXPXP", "XPXPX", "PXPXP"],
+        ])
+      );
+    </script>
+  </body>
+</html>
