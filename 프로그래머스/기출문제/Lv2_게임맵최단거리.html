@@ -1,0 +1,44 @@
+<!-- 링크 : https://school.programmers.co.kr/learn/courses/30/lessons/1844
+문제생략 -->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(maps) {
+        const xLength = maps.length;
+        const yLength = maps[0].length;
+        const dx = [0, 0, -1, 1];
+        const dy = [-1, 1, 0, 0];
+
+        const bfs = () => {
+          const queue = [[0, 0, 1]];
+
+          while (queue.length) {
+            const [x, y, count] = queue.shift();
+
+            if (x === xLength - 1 && y === yLength - 1) return count;
+
+            if (maps[x][y]) {
+              maps[x][y] = 0;
+              dx.forEach((dx, i) => {
+                const nx = x + dx;
+                const ny = y + dy[i];
+
+                if (nx >= 0 && nx < xLength && ny >= 0 && ny < yLength && maps[nx][ny]) queue.push([nx, ny, count + 1]);
+              });
+            }
+          }
+
+          return -1;
+        };
+
+        return bfs();
+      }
+
+      console.log(solution("[[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]"));
+    </script>
+  </body>
+</html>
