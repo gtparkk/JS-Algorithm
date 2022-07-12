@@ -8,34 +8,28 @@
   <body>
     <script>
       function solution(maps) {
-        const xLength = maps.length;
-        const yLength = maps[0].length;
-        const dx = [0, 0, -1, 1];
-        const dy = [-1, 1, 0, 0];
+        let row = maps.length;
+        let col = maps[0].length;
+        let dx = [0, 1, 0, -1];
+        let dy = [-1, 0, 1, 0];
+        let queue = [[0, 0]];
+        let distance = Array.from(Array(row), () => Array(col).fill(1));
 
-        const bfs = () => {
-          const queue = [[0, 0, 1]];
+        while (queue.length) {
+          const [y, x] = queue.shift();
 
-          while (queue.length) {
-            const [x, y, count] = queue.shift();
+          dx.forEach((v, i) => {
+            const newx = x + v;
+            const newy = y + dy[i];
 
-            if (x === xLength - 1 && y === yLength - 1) return count;
-
-            if (maps[x][y]) {
-              maps[x][y] = 0;
-              dx.forEach((dx, i) => {
-                const nx = x + dx;
-                const ny = y + dy[i];
-
-                if (nx >= 0 && nx < xLength && ny >= 0 && ny < yLength && maps[nx][ny]) queue.push([nx, ny, count + 1]);
-              });
+            if (newx >= 0 && newy >= 0 && newx < col && newy < row && maps[newy][newx] === 1 && distance[newy][newx] === 1) {
+              distance[newy][newx] = distance[y][x] + 1;
+              queue.push([newy, newx]);
             }
-          }
+          });
+        }
 
-          return -1;
-        };
-
-        return bfs();
+        return distance[row - 1][col - 1] === 1 ? -1 : distance[row - 1][col - 1];
       }
 
       console.log(solution("[[1,0,1,1,1],[1,0,1,0,1],[1,0,1,1,1],[1,1,1,0,1],[0,0,0,0,1]]"));
