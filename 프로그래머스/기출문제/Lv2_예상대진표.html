@@ -33,16 +33,21 @@ N	A	B	answer
   <body>
     <script>
       function solution(n, a, b) {
-        let round = 0;
+        if (a <= n / 2 && b > n / 2) {
+          let m = n;
+          let count = 0;
 
-        while (a !== b) {
-          a = Math.ceil(a / 2);
-          b = Math.ceil(b / 2);
-          round += 1;
+          while (m > 1) {
+            m = m / 2;
+            count++;
+          }
+
+          return count;
         }
 
-        return round;
+        return solution(n / 2, a, b);
       }
+
       console.log(solution(8, 4, 7));
     </script>
   </body>
