@@ -63,44 +63,36 @@ s	result
   <body>
     <script>
       function solution(s) {
-        let answer = s.length;
+        let answers = [];
 
-        for (let cutLength = 1; cutLength <= Math.floor(s.length / 2); cutLength++) {
-          let str = "";
-          let cnt = 1;
-          let prevStr = s.substr(0, cutLength);
+        for (let i = 1; i <= s.length; i++) {
+          answers.push(getAnswer(s, i));
+        }
 
-          for (let i = cutLength; i < s.length; i += cutLength) {
-            let currStr = s.substr(i, cutLength);
+        return Math.min(...answers.map((e) => e.join("").length));
+      }
 
-            if (prevStr === currStr) {
-              cnt++;
-            } else {
-              if (cnt === 1) {
-                str += prevStr;
-              } else {
-                str += cnt + prevStr;
-              }
+      function getAnswer(str, unit) {
+        let count = 1;
+        let answer = [];
 
-              cnt = 1;
-              prevStr = currStr;
-            }
-          }
+        for (let i = 0; i <= str.length / unit; i++) {
+          let unitStr = str.slice(unit * i, unit * i + unit);
 
-          if (cnt === 1) {
-            str += prevStr;
+          if (answer[answer.length - 1] == unitStr) {
+            count++;
           } else {
-            str += cnt + prevStr;
-          }
+            if (count > 1) answer[answer.length - 1] = count + answer[answer.length - 1];
 
-          answer = Math.min(answer, str.length);
-          console.log(cutLength, str);
+            answer.push(unitStr);
+            count = 1;
+          }
         }
 
         return answer;
       }
 
-      console.log(solution("ababcdcdababcdcd"));
+      https: console.log(solution("ababcdcdababcdcd"));
     </script>
   </body>
 </html>
