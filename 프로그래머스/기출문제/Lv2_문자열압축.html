@@ -62,37 +62,21 @@ s	result
   </head>
   <body>
     <script>
-      function solution(s) {
-        let answers = [];
+      const solution = (s) => {
+        const range = [...Array(s.length)].map((_, i) => i + 1);
 
-        for (let i = 1; i <= s.length; i++) {
-          answers.push(getAnswer(s, i));
-        }
+        return Math.min(...range.map((i) => compress(s, i).length));
+      };
 
-        return Math.min(...answers.map((e) => e.join("").length));
-      }
+      const compress = (s, n) => {
+        const make = ([a, l, c]) => `${a}${c > 1 ? c : ""}${l}`;
 
-      function getAnswer(str, unit) {
-        let count = 1;
-        let answer = [];
+        return make(chunk(s, n).reduce(([a, l, c], e) => (e === l ? [a, l, c + 1] : [make([a, l, c]), e, 1]), ["", "", 0]));
+      };
 
-        for (let i = 0; i <= str.length / unit; i++) {
-          let unitStr = str.slice(unit * i, unit * i + unit);
+      const chunk = (s, n) => (s.length <= n ? [s] : [s.slice(0, n), ...chunk(s.slice(n), n)]);
 
-          if (answer[answer.length - 1] == unitStr) {
-            count++;
-          } else {
-            if (count > 1) answer[answer.length - 1] = count + answer[answer.length - 1];
-
-            answer.push(unitStr);
-            count = 1;
-          }
-        }
-
-        return answer;
-      }
-
-      https: console.log(solution("ababcdcdababcdcd"));
+      console.log(solution("ababcdcdababcdcd"));
     </script>
   </body>
 </html>
