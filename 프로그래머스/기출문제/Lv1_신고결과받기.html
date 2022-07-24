@@ -81,11 +81,11 @@ id_list	report	k	result
         for (let i = 0; i < report.length; i++) {
           const fromTo = report[i].split(" ");
 
-          reportCnt.set(fromTo[1], reportCnt.get(fromTo[1]) + 1);
-          userReport.get(fromTo[0]).push(fromTo[1]);
+          if (userReport.get(fromTo[0]).indexOf(fromTo[1]) === -1) {
+            reportCnt.set(fromTo[1], reportCnt.get(fromTo[1]) + 1);
+            userReport.get(fromTo[0]).push(fromTo[1]);
+          }
         }
-
-        console.log(reportCnt, userReport);
 
         for (let i = 0; i < id_list.length; i++) {
           const reportedUsers = userReport.get(id_list[i]);
