@@ -21,9 +21,10 @@ S단어에 T문자열과 아나그램이 되는 부분문자열의 개수를 출
   <body>
     <script>
       function solution(s, t) {
-        let answer = (lt = 0);
+        const map = new Map();
+        let answer = 0;
+        let lt = 0;
         let rt = t.length;
-        let map = new Map();
 
         for (let i = 0; i < t.length; i++) {
           let mCount = map.has(t[i]) ? map.get(t[i]) - 1 : -1;
@@ -56,8 +57,10 @@ S단어에 T문자열과 아나그램이 되는 부분문자열의 개수를 출
 
         return answer;
       }
-      let a = "bacaAacba";
-      let b = "abc";
+
+      const a = "bacaAacba";
+      const b = "abc";
+
       console.log(solution(a, b));
     </script>
   </body>
