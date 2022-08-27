@@ -71,15 +71,17 @@ orders	                                            course    result
           }
         }
 
-        function getCombination(order, level, limit) {
-          if (level === limit) {
+        function getCombination(order, min, limit) {
+          if (min === limit) {
             if (menu.has(temp)) {
               menu.set(temp, menu.get(temp));
             } else {
               menu.set(temp, 1);
             }
-
-            return;
+          }else{
+            for(let i=min;i<order.length;i++){
+              if(check )
+            }
           }
         }
 
