@@ -2,7 +2,7 @@
 
 Javascript algorithm problem solving
 
-### 강의
+## 👨‍🏫 강의
 
 1. JS 기본문법
 2. 2차원 탐색
@@ -15,7 +15,7 @@ Javascript algorithm problem solving
 8. 그래프와 탐색[DFS, BFS(넓이우선)]
 9. Dynamic Programming(동적계획법)
 
-### 프로그래머스 고득점 Kit ([링크](https://programmers.co.kr/learn/challenges?tab=algorithm_practice_kit))
+## 👨🏻‍💻 프로그래머스 고득점 Kit ([ 링크 ](https://programmers.co.kr/learn/challenges?tab=algorithm_practice_kit))
 
 1. 해시
 2. 스택,큐
@@ -27,3 +27,7 @@ Javascript algorithm problem solving
 8. DFS, BFS
 9. 이분탐색
 10. 그래프
+
+## ☀️ LeetCode Daily ([ 링크 ](https://leetcode.com/pgt0708/))
+
+### 22.09.02 시작
